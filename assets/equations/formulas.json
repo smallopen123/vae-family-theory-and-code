@@ -1,0 +1,450 @@
+{
+  "vae/eq-01.svg": {
+    "tag": "1",
+    "latex": "p_\\theta(x,z)=p(z)p_\\theta(x\\mid z).\n\\tag{1}",
+    "rows": [
+      "p_\\theta(x,z)=p(z)p_\\theta(x\\mid z)."
+    ]
+  },
+  "vae/eq-02.svg": {
+    "tag": "2",
+    "latex": "\\log p_\\theta(x)=\\log\\int p_\\theta(x,z)\\,dz\n=\\log\\int p(z)p_\\theta(x\\mid z)\\,dz.\n\\tag{2}",
+    "rows": [
+      "\\log p_\\theta(x)=\\log\\int p_\\theta(x,z)\\,dz =\\log\\int p(z)p_\\theta(x\\mid z)\\,dz."
+    ]
+  },
+  "vae/eq-03.svg": {
+    "tag": "3",
+    "latex": "p_\\theta(z\\mid x)\n=\\frac{p_\\theta(x,z)}{p_\\theta(x)}\n=\\frac{p(z)p_\\theta(x\\mid z)}\n{\\int p(z)p_\\theta(x\\mid z)\\,dz}.\n\\tag{3}",
+    "rows": [
+      "p_\\theta(z\\mid x) =\\frac{p_\\theta(x,z)}{p_\\theta(x)} =\\frac{p(z)p_\\theta(x\\mid z)} {\\int p(z)p_\\theta(x\\mid z)\\,dz}."
+    ]
+  },
+  "vae/eq-04.svg": {
+    "tag": "4",
+    "latex": "q_\\phi(z\\mid x)\\approx p_\\theta(z\\mid x),\n\\tag{4}",
+    "rows": [
+      "q_\\phi(z\\mid x)\\approx p_\\theta(z\\mid x)"
+    ]
+  },
+  "vae/eq-05.svg": {
+    "tag": "5",
+    "latex": "q_\\phi(z\\mid x)\n=\\mathcal N\\!\\left(\nz;\\mu_\\phi(x),\n\\operatorname{diag}(\\sigma_\\phi^2(x))\n\\right).\n\\tag{5}",
+    "rows": [
+      "q_\\phi(z\\mid x) =\\mathcal{N}\\!\\left( z;\\mu_\\phi(x), \\mathrm{diag}(\\sigma_\\phi^2(x)) \\right)."
+    ]
+  },
+  "vae/eq-06.svg": {
+    "tag": "6",
+    "latex": "q_\\phi(z\\mid x)=\\prod_{j=1}^{d}\n\\mathcal N(z_j;\\mu_j,\\sigma_j^2).\n\\tag{6}",
+    "rows": [
+      "q_\\phi(z\\mid x)=\\prod_{j=1}^{d} \\mathcal{N}(z_j;\\mu_j,\\sigma_j^2)."
+    ]
+  },
+  "vae/eq-07.svg": {
+    "tag": "7",
+    "latex": "\\begin{aligned}\n\\log p_\\theta(x)\n&=\\log\\int p_\\theta(x,z)\\,dz\\\\\n&=\\log\\int q_\\phi(z\\mid x)\n\\frac{p_\\theta(x,z)}{q_\\phi(z\\mid x)}\\,dz\\\\\n&=\\log\\mathbb E_{q_\\phi(z\\mid x)}\n\\left[\\frac{p_\\theta(x,z)}{q_\\phi(z\\mid x)}\\right].\n\\end{aligned}\n\\tag{7}",
+    "rows": [
+      "\\log p_\\theta(x) =\\log\\int p_\\theta(x,z)\\,dz",
+      "=\\log\\int q_\\phi(z\\mid x) \\frac{p_\\theta(x,z)}{q_\\phi(z\\mid x)}\\,dz",
+      "=\\log\\mathbb{E}_{q_\\phi(z\\mid x)} \\left[\\frac{p_\\theta(x,z)}{q_\\phi(z\\mid x)}\\right]."
+    ]
+  },
+  "vae/eq-08.svg": {
+    "tag": "8",
+    "latex": "\\log\\mathbb E[Y]\\ge \\mathbb E[\\log Y].\n\\tag{8}",
+    "rows": [
+      "\\log\\mathbb{E}[Y]\\geq \\mathbb{E}[\\log Y]."
+    ]
+  },
+  "vae/eq-09.svg": {
+    "tag": "9",
+    "latex": "\\begin{aligned}\n\\log p_\\theta(x)\n&\\ge\n\\mathbb E_{q_\\phi(z\\mid x)}\n\\left[\n\\log\\frac{p_\\theta(x,z)}{q_\\phi(z\\mid x)}\n\\right]\\\\\n&=\n\\mathbb E_q[\n\\log p_\\theta(x,z)-\\log q_\\phi(z\\mid x)\n]\\\\\n&\\equiv \\mathcal L(\\theta,\\phi;x).\n\\end{aligned}\n\\tag{9}",
+    "rows": [
+      "\\log p_\\theta(x) \\geq \\mathbb{E}_{q_\\phi(z\\mid x)} \\left[ \\log\\frac{p_\\theta(x,z)}{q_\\phi(z\\mid x)} \\right]",
+      "= \\mathbb{E}_q[ \\log p_\\theta(x,z)-\\log q_\\phi(z\\mid x) ]",
+      "\\equiv \\mathcal{L}(\\theta,\\phi;x)."
+    ]
+  },
+  "vae/eq-10.svg": {
+    "tag": "10",
+    "latex": "\\begin{aligned}\n\\mathcal L\n&=\\mathbb E_q[\n\\log p_\\theta(x\\mid z)+\\log p(z)-\\log q_\\phi(z\\mid x)\n]\\\\\n&=\\underbrace{\\mathbb E_q[\\log p_\\theta(x\\mid z)]}_{\\text{期望重构对数似然}}\n-\\underbrace{\n\\mathbb E_q\\left[\n\\log\\frac{q_\\phi(z\\mid x)}{p(z)}\n\\right]}_{D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p(z))}.\n\\end{aligned}\n\\tag{10}",
+    "rows": [
+      "\\mathcal{L} =\\mathbb{E}_q[ \\log p_\\theta(x\\mid z)+\\log p(z)-\\log q_\\phi(z\\mid x) ]",
+      "=\\mathbb{E}_q[\\log p_\\theta(x\\mid z)] - \\mathbb{E}_q\\left[ \\log\\frac{q_\\phi(z\\mid x)}{p(z)} \\right]."
+    ]
+  },
+  "vae/eq-11.svg": {
+    "tag": "11",
+    "latex": "\\boxed{\n\\mathcal L\n=\\mathbb E_{q_\\phi(z\\mid x)}[\\log p_\\theta(x\\mid z)]\n-D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p(z))\n}.\n\\tag{11}",
+    "rows": [
+      "\\mathcal{L} =\\mathbb{E}_{q_\\phi(z\\mid x)}[\\log p_\\theta(x\\mid z)] -D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p(z)) ."
+    ]
+  },
+  "vae/eq-12.svg": {
+    "tag": "12",
+    "latex": "\\boxed{\n\\mathcal J_{\\mathrm{VAE}}\n=-\\mathcal L\n=\\mathcal J_{\\mathrm{rec}}+\\mathcal J_{\\mathrm{KL}}\n}.\n\\tag{12}",
+    "rows": [
+      "\\mathcal{J}_{\\mathrm{VAE}} =-\\mathcal{L} =\\mathcal{J}_{\\mathrm{rec}}+\\mathcal{J}_{\\mathrm{KL}} ."
+    ]
+  },
+  "vae/eq-13.svg": {
+    "tag": "13",
+    "latex": "D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p_\\theta(z\\mid x))\n=\\mathbb E_q\\left[\n\\log\\frac{q_\\phi(z\\mid x)}{p_\\theta(z\\mid x)}\n\\right].\n\\tag{13}",
+    "rows": [
+      "D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p_\\theta(z\\mid x)) =\\mathbb{E}_q\\left[ \\log\\frac{q_\\phi(z\\mid x)}{p_\\theta(z\\mid x)} \\right]."
+    ]
+  },
+  "vae/eq-14.svg": {
+    "tag": "14",
+    "latex": "\\log p_\\theta(z\\mid x)\n=\\log p_\\theta(x,z)-\\log p_\\theta(x).\n\\tag{14}",
+    "rows": [
+      "\\log p_\\theta(z\\mid x) =\\log p_\\theta(x,z)-\\log p_\\theta(x)."
+    ]
+  },
+  "vae/eq-15.svg": {
+    "tag": "15",
+    "latex": "\\begin{aligned}\nD_{\\mathrm{KL}}(q\\Vert p_\\theta)\n&=\\mathbb E_q[\n\\log q_\\phi(z\\mid x)-\\log p_\\theta(x,z)+\\log p_\\theta(x)\n]\\\\\n&=\\log p_\\theta(x)\n-\\mathbb E_q[\n\\log p_\\theta(x,z)-\\log q_\\phi(z\\mid x)\n]\\\\\n&=\\log p_\\theta(x)-\\mathcal L(\\theta,\\phi;x).\n\\end{aligned}\n\\tag{15}",
+    "rows": [
+      "D_{\\mathrm{KL}}(q\\Vert p_\\theta) =\\mathbb{E}_q[ \\log q_\\phi(z\\mid x)-\\log p_\\theta(x,z)+\\log p_\\theta(x) ]",
+      "=\\log p_\\theta(x) -\\mathbb{E}_q[ \\log p_\\theta(x,z)-\\log q_\\phi(z\\mid x) ]",
+      "=\\log p_\\theta(x)-\\mathcal{L}(\\theta,\\phi;x)."
+    ]
+  },
+  "vae/eq-16.svg": {
+    "tag": "16",
+    "latex": "\\boxed{\n\\log p_\\theta(x)\n=\\mathcal L(\\theta,\\phi;x)\n+D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p_\\theta(z\\mid x))\n}.\n\\tag{16}",
+    "rows": [
+      "\\log p_\\theta(x) =\\mathcal{L}(\\theta,\\phi;x) +D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p_\\theta(z\\mid x)) ."
+    ]
+  },
+  "vae/eq-17.svg": {
+    "tag": "17",
+    "latex": "q(z)=\\mathcal N(\\mu,\\sigma^2),\\qquad p(z)=\\mathcal N(0,1).\n\\tag{17}",
+    "rows": [
+      "q(z)=\\mathcal{N}(\\mu,\\sigma^2),\\qquad p(z)=\\mathcal{N}(0,1)."
+    ]
+  },
+  "vae/eq-18.svg": {
+    "tag": "18",
+    "latex": "\\log q(z)=-\\frac12\\log(2\\pi\\sigma^2)\n-\\frac{(z-\\mu)^2}{2\\sigma^2},\n\\tag{18}",
+    "rows": [
+      "\\log q(z)=-\\frac{1}{2}\\log(2\\pi\\sigma^2) -\\frac{(z-\\mu)^2}{2\\sigma^2}"
+    ]
+  },
+  "vae/eq-19.svg": {
+    "tag": "19",
+    "latex": "\\log p(z)=-\\frac12\\log(2\\pi)-\\frac{z^2}{2}.\n\\tag{19}",
+    "rows": [
+      "\\log p(z)=-\\frac{1}{2}\\log(2\\pi)-\\frac{z^2}{2}."
+    ]
+  },
+  "vae/eq-20.svg": {
+    "tag": "20",
+    "latex": "\\begin{aligned}\nD_{\\mathrm{KL}}(q\\Vert p)\n&=\\mathbb E_q[\\log q(z)-\\log p(z)]\\\\\n&=\\frac12\\mathbb E_q\\left[\n-\\log\\sigma^2-\\frac{(z-\\mu)^2}{\\sigma^2}+z^2\n\\right].\n\\end{aligned}\n\\tag{20}",
+    "rows": [
+      "D_{\\mathrm{KL}}(q\\Vert p) =\\mathbb{E}_q[\\log q(z)-\\log p(z)]",
+      "=\\frac{1}{2}\\mathbb{E}_q\\left[ -\\log\\sigma^2-\\frac{(z-\\mu)^2}{\\sigma^2}+z^2 \\right]."
+    ]
+  },
+  "vae/eq-21.svg": {
+    "tag": "21",
+    "latex": "\\mathbb E_q[(z-\\mu)^2]=\\sigma^2,\n\\qquad\n\\mathbb E_q[z^2]=\\operatorname{Var}(z)+(\\mathbb E z)^2\n=\\sigma^2+\\mu^2.\n\\tag{21}",
+    "rows": [
+      "\\mathbb{E}_q[(z-\\mu)^2]=\\sigma^2, \\qquad \\mathbb{E}_q[z^2]=\\mathrm{Var}(z)+(\\mathbb{E} z)^2 =\\sigma^2+\\mu^2."
+    ]
+  },
+  "vae/eq-22.svg": {
+    "tag": "22",
+    "latex": "\\begin{aligned}\nD_{\\mathrm{KL}}(q\\Vert p)\n&=\\frac12[\n-\\log\\sigma^2-1+\\sigma^2+\\mu^2\n]\\\\\n&=\\frac12(\\mu^2+\\sigma^2-1-\\log\\sigma^2).\n\\end{aligned}\n\\tag{22}",
+    "rows": [
+      "D_{\\mathrm{KL}}(q\\Vert p) =\\frac{1}{2}[ -\\log\\sigma^2-1+\\sigma^2+\\mu^2 ]",
+      "=\\frac{1}{2}(\\mu^2+\\sigma^2-1-\\log\\sigma^2)."
+    ]
+  },
+  "vae/eq-23.svg": {
+    "tag": "23",
+    "latex": "\\boxed{\nD_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert\\mathcal N(0,I))\n=\\frac12\\sum_{j=1}^{d}\n(\\mu_j^2+\\sigma_j^2-1-\\log\\sigma_j^2)\n}.\n\\tag{23}",
+    "rows": [
+      "D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert\\mathcal{N}(0,I)) =\\frac{1}{2}\\sum_{j=1}^{d} (\\mu_j^2+\\sigma_j^2-1-\\log\\sigma_j^2) ."
+    ]
+  },
+  "vae/eq-24.svg": {
+    "tag": "24",
+    "latex": "\\boxed{\nD_{\\mathrm{KL}}\n=-\\frac12\\sum_j(1+\\ell_j-\\mu_j^2-e^{\\ell_j})\n}.\n\\tag{24}",
+    "rows": [
+      "D_{\\mathrm{KL}} =-\\frac{1}{2}\\sum_j(1+\\ell_j-\\mu_j^2-e^{\\ell_j}) ."
+    ]
+  },
+  "vae/eq-25.svg": {
+    "tag": "25",
+    "latex": "p_\\theta(x\\mid z)=\\prod_{i=1}^{D}\n\\hat x_i^{x_i}(1-\\hat x_i)^{1-x_i}.\n\\tag{25}",
+    "rows": [
+      "p_\\theta(x\\mid z)=\\prod_{i=1}^{D} \\hat x_i^{x_i}(1-\\hat x_i)^{1-x_i}."
+    ]
+  },
+  "vae/eq-26.svg": {
+    "tag": "26",
+    "latex": "-\\log p_\\theta(x\\mid z)\n=-\\sum_i[x_i\\log\\hat x_i+(1-x_i)\\log(1-\\hat x_i)].\n\\tag{26}",
+    "rows": [
+      "-\\log p_\\theta(x\\mid z) =-\\sum_i[x_i\\log\\hat x_i+(1-x_i)\\log(1-\\hat x_i)]."
+    ]
+  },
+  "vae/eq-27.svg": {
+    "tag": "27",
+    "latex": "p_\\theta(x\\mid z)=\\mathcal N(x;f_\\theta(z),\\sigma_x^2 I),\n\\tag{27}",
+    "rows": [
+      "p_\\theta(x\\mid z)=\\mathcal{N}(x;f_\\theta(z),\\sigma_x^2 I)"
+    ]
+  },
+  "vae/eq-28.svg": {
+    "tag": "28",
+    "latex": "-\\log p_\\theta(x\\mid z)\n=\\frac{D}{2}\\log(2\\pi\\sigma_x^2)\n+\\frac{1}{2\\sigma_x^2}\\|x-f_\\theta(z)\\|_2^2.\n\\tag{28}",
+    "rows": [
+      "-\\log p_\\theta(x\\mid z) =\\frac{D}{2}\\log(2\\pi\\sigma_x^2) +\\frac{1}{2\\sigma_x^2}\\|x-f_\\theta(z)\\|_2^2."
+    ]
+  },
+  "vae/eq-29.svg": {
+    "tag": "29",
+    "latex": "\\mathbb E_{q_\\phi(z\\mid x)}[f_\\theta(z)].\n\\tag{29}",
+    "rows": [
+      "\\mathbb{E}_{q_\\phi(z\\mid x)}[f_\\theta(z)]."
+    ]
+  },
+  "vae/eq-30.svg": {
+    "tag": "30",
+    "latex": "\\epsilon\\sim\\mathcal N(0,I),\n\\qquad\nz=\\mu_\\phi(x)+\\sigma_\\phi(x)\\odot\\epsilon.\n\\tag{30}",
+    "rows": [
+      "\\epsilon\\sim\\mathcal{N}(0,I), \\qquad z=\\mu_\\phi(x)+\\sigma_\\phi(x)\\odot\\epsilon."
+    ]
+  },
+  "vae/eq-31.svg": {
+    "tag": "31",
+    "latex": "\\mathbb E_{q_\\phi(z\\mid x)}[f_\\theta(z)]\n=\\mathbb E_{\\epsilon\\sim\\mathcal N(0,I)}\n\\left[\nf_\\theta(\\mu_\\phi(x)+\\sigma_\\phi(x)\\odot\\epsilon)\n\\right].\n\\tag{31}",
+    "rows": [
+      "\\mathbb{E}_{q_\\phi(z\\mid x)}[f_\\theta(z)] =\\mathbb{E}_{\\epsilon\\sim\\mathcal{N}(0,I)} \\left[ f_\\theta(\\mu_\\phi(x)+\\sigma_\\phi(x)\\odot\\epsilon) \\right]."
+    ]
+  },
+  "vae/eq-32.svg": {
+    "tag": "32",
+    "latex": "\\nabla_\\phi\\mathbb E_\\epsilon[f_\\theta(g_\\phi(x,\\epsilon))]\n=\\mathbb E_\\epsilon[\n\\nabla_z f_\\theta(z)\\nabla_\\phi g_\\phi(x,\\epsilon)\n].\n\\tag{32}",
+    "rows": [
+      "\\nabla_\\phi\\mathbb{E}_\\epsilon[f_\\theta(g_\\phi(x,\\epsilon))] =\\mathbb{E}_\\epsilon[ \\nabla_z f_\\theta(z)\\nabla_\\phi g_\\phi(x,\\epsilon) ]."
+    ]
+  },
+  "vae/eq-33.svg": {
+    "tag": "33",
+    "latex": "\\mathbb E_q[\\log p_\\theta(x\\mid z)]\n\\approx \\log p_\\theta(x\\mid z^{(1)}),\n\\quad z^{(1)}=\\mu+\\sigma\\odot\\epsilon^{(1)}.\n\\tag{33}",
+    "rows": [
+      "\\mathbb{E}_q[\\log p_\\theta(x\\mid z)] \\approx \\log p_\\theta(x\\mid z^{(1)}), \\quad z^{(1)}=\\mu+\\sigma\\odot\\epsilon^{(1)}."
+    ]
+  },
+  "vae/eq-34.svg": {
+    "tag": "34",
+    "latex": "\\mathcal L_{\\mathrm{dataset}}\n=\\sum_{n=1}^{N}\\mathcal L(\\theta,\\phi;x^{(n)}).\n\\tag{34}",
+    "rows": [
+      "\\mathcal{L}_{\\mathrm{dataset}} =\\sum_{n=1}^{N}\\mathcal{L}(\\theta,\\phi;x^{(n)})."
+    ]
+  },
+  "vae/eq-35.svg": {
+    "tag": "35",
+    "latex": "\\mathcal L_{\\mathrm{dataset}}\n\\approx\\frac{N}{|B|}\\sum_{x\\in B}\\mathcal L(\\theta,\\phi;x).\n\\tag{35}",
+    "rows": [
+      "\\mathcal{L}_{\\mathrm{dataset}} \\approx\\frac{N}{|B|}\\sum_{x\\in B}\\mathcal{L}(\\theta,\\phi;x)."
+    ]
+  },
+  "vae/eq-36.svg": {
+    "tag": "36",
+    "latex": "\\mathcal J\n=\\frac1{|B|}\\sum_{x\\in B}\n\\left[\n-\\log p_\\theta(x\\mid z)\n+\\frac12\\sum_j(\\mu_j^2+e^{\\ell_j}-1-\\ell_j)\n\\right].\n\\tag{36}",
+    "rows": [
+      "\\mathcal{J} =\\frac{1}{|B|}\\sum_{x\\in B} \\left[ -\\log p_\\theta(x\\mid z) +\\frac{1}{2}\\sum_j(\\mu_j^2+e^{\\ell_j}-1-\\ell_j) \\right]."
+    ]
+  },
+  "variants/eq-01.svg": {
+    "tag": "1",
+    "latex": "\\mathcal L_{\\mathrm{VAE}}\n=\\mathbb E_q[\\log p_\\theta(x\\mid z)]\n-D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p(z)).\n\\tag{1}",
+    "rows": [
+      "\\mathcal{L}_{\\mathrm{VAE}} =\\mathbb{E}_q[\\log p_\\theta(x\\mid z)] -D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p(z))."
+    ]
+  },
+  "variants/eq-02.svg": {
+    "tag": "2",
+    "latex": "\\boxed{\n\\mathcal L_{\\beta}\n=\\mathbb E_q[\\log p_\\theta(x\\mid z)]\n-\\beta D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p(z))\n}.\n\\tag{2}",
+    "rows": [
+      "\\mathcal{L}_{\\beta} =\\mathbb{E}_q[\\log p_\\theta(x\\mid z)] -\\beta D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p(z)) ."
+    ]
+  },
+  "variants/eq-03.svg": {
+    "tag": "3",
+    "latex": "\\max_{\\theta,\\phi}\\ \n\\mathbb E_q[\\log p_\\theta(x\\mid z)]\n\\quad\n\\text{s.t.}\\quad\nD_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p(z))\\le C.\n\\tag{3}",
+    "rows": [
+      "\\max_{\\theta,\\phi}\\ \\mathbb{E}_q[\\log p_\\theta(x\\mid z)] \\quad \\mathrm{s.t.}\\quad D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\Vert p(z))\\leq C."
+    ]
+  },
+  "variants/eq-04.svg": {
+    "tag": "4",
+    "latex": "\\begin{aligned}\n\\mathcal F\n&=\\mathbb E_q[\\log p_\\theta(x\\mid z)]\n-\\beta(D_{\\mathrm{KL}}-C)\\\\\n&=\\mathbb E_q[\\log p_\\theta(x\\mid z)]\n-\\beta D_{\\mathrm{KL}}+\\beta C.\n\\end{aligned}\n\\tag{4}",
+    "rows": [
+      "\\mathcal{F} =\\mathbb{E}_q[\\log p_\\theta(x\\mid z)] -\\beta(D_{\\mathrm{KL}}-C)",
+      "=\\mathbb{E}_q[\\log p_\\theta(x\\mid z)] -\\beta D_{\\mathrm{KL}}+\\beta C."
+    ]
+  },
+  "variants/eq-05.svg": {
+    "tag": "5",
+    "latex": "p_\\theta(x\\mid c)=\\int p_\\theta(x,z\\mid c)\\,dz.\n\\tag{5}",
+    "rows": [
+      "p_\\theta(x\\mid c)=\\int p_\\theta(x,z\\mid c)\\,dz."
+    ]
+  },
+  "variants/eq-06.svg": {
+    "tag": "6",
+    "latex": "p_\\theta(x,z\\mid c)=p(z\\mid c)p_\\theta(x\\mid z,c).\n\\tag{6}",
+    "rows": [
+      "p_\\theta(x,z\\mid c)=p(z\\mid c)p_\\theta(x\\mid z,c)."
+    ]
+  },
+  "variants/eq-07.svg": {
+    "tag": "7",
+    "latex": "\\begin{aligned}\n\\log p_\\theta(x\\mid c)\n&=\\log\\int q_\\phi(z\\mid x,c)\n\\frac{p_\\theta(x,z\\mid c)}{q_\\phi(z\\mid x,c)}dz\\\\\n&\\ge\n\\mathbb E_{q_\\phi(z\\mid x,c)}\n\\left[\n\\log\\frac{p_\\theta(x,z\\mid c)}{q_\\phi(z\\mid x,c)}\n\\right]\\\\\n&=\n\\mathbb E_q[\\log p_\\theta(x\\mid z,c)]\n-D_{\\mathrm{KL}}(q_\\phi(z\\mid x,c)\\Vert p(z\\mid c)).\n\\end{aligned}\n\\tag{7}",
+    "rows": [
+      "\\log p_\\theta(x\\mid c) =\\log\\int q_\\phi(z\\mid x,c) \\frac{p_\\theta(x,z\\mid c)}{q_\\phi(z\\mid x,c)}dz",
+      "\\geq \\mathbb{E}_{q_\\phi(z\\mid x,c)} \\left[ \\log\\frac{p_\\theta(x,z\\mid c)}{q_\\phi(z\\mid x,c)} \\right]",
+      "= \\mathbb{E}_q[\\log p_\\theta(x\\mid z,c)] -D_{\\mathrm{KL}}(q_\\phi(z\\mid x,c)\\Vert p(z\\mid c))."
+    ]
+  },
+  "variants/eq-08.svg": {
+    "tag": "8",
+    "latex": "\\boxed{\n\\mathcal L_{\\mathrm{CVAE}}\n=\\mathbb E_q[\\log p_\\theta(x\\mid z,c)]\n-D_{\\mathrm{KL}}(q_\\phi(z\\mid x,c)\\Vert p(z))\n}.\n\\tag{8}",
+    "rows": [
+      "\\mathcal{L}_{\\mathrm{CVAE}} =\\mathbb{E}_q[\\log p_\\theta(x\\mid z,c)] -D_{\\mathrm{KL}}(q_\\phi(z\\mid x,c)\\Vert p(z)) ."
+    ]
+  },
+  "variants/eq-09.svg": {
+    "tag": "9",
+    "latex": "w(z)=\\frac{p_\\theta(x,z)}{q_\\phi(z\\mid x)}.\n\\tag{9}",
+    "rows": [
+      "w(z)=\\frac{p_\\theta(x,z)}{q_\\phi(z\\mid x)}."
+    ]
+  },
+  "variants/eq-10.svg": {
+    "tag": "10",
+    "latex": "\\mathbb E_{q_\\phi(z\\mid x)}[w(z)]\n=\\int q(z\\mid x)\\frac{p_\\theta(x,z)}{q(z\\mid x)}dz\n=p_\\theta(x),\n\\tag{10}",
+    "rows": [
+      "\\mathbb{E}_{q_\\phi(z\\mid x)}[w(z)] =\\int q(z\\mid x)\\frac{p_\\theta(x,z)}{q(z\\mid x)}dz =p_\\theta(x)"
+    ]
+  },
+  "variants/eq-11.svg": {
+    "tag": "11",
+    "latex": "\\hat p_K(x)=\\frac1K\\sum_{k=1}^{K}w(z_k),\n\\qquad\n\\mathbb E[\\hat p_K(x)]=p_\\theta(x).\n\\tag{11}",
+    "rows": [
+      "\\hat p_K(x)=\\frac{1}{K}\\sum_{k=1}^{K}w(z_k), \\qquad \\mathbb{E}[\\hat p_K(x)]=p_\\theta(x)."
+    ]
+  },
+  "variants/eq-12.svg": {
+    "tag": "12",
+    "latex": "\\begin{aligned}\n\\log p_\\theta(x)\n&=\\log\\mathbb E_{z_{1:K}}[\\hat p_K(x)]\\\\\n&\\ge\\mathbb E_{z_{1:K}}[\\log\\hat p_K(x)]\\\\\n&\\equiv\\mathcal L_K.\n\\end{aligned}\n\\tag{12}",
+    "rows": [
+      "\\log p_\\theta(x) =\\log\\mathbb{E}_{z_{1:K}}[\\hat p_K(x)]",
+      "\\geq\\mathbb{E}_{z_{1:K}}[\\log\\hat p_K(x)]",
+      "\\equiv\\mathcal{L}_K."
+    ]
+  },
+  "variants/eq-13.svg": {
+    "tag": "13",
+    "latex": "\\boxed{\n\\mathcal L_K\n=\\mathbb E_{z_{1:K}\\sim q}\n\\left[\n\\log\\frac1K\\sum_{k=1}^{K}\n\\frac{p_\\theta(x,z_k)}{q_\\phi(z_k\\mid x)}\n\\right]\n}.\n\\tag{13}",
+    "rows": [
+      "\\mathcal{L}_K =\\mathbb{E}_{z_{1:K}\\sim q} \\left[ \\log\\frac{1}{K}\\sum_{k=1}^{K} \\frac{p_\\theta(x,z_k)}{q_\\phi(z_k\\mid x)} \\right] ."
+    ]
+  },
+  "variants/eq-14.svg": {
+    "tag": "14",
+    "latex": "\\mathcal L_1\n=\\mathbb E_q[\\log p_\\theta(x,z)-\\log q_\\phi(z\\mid x)]\n=\\mathcal L_{\\mathrm{VAE}}.\n\\tag{14}",
+    "rows": [
+      "\\mathcal{L}_1 =\\mathbb{E}_q[\\log p_\\theta(x,z)-\\log q_\\phi(z\\mid x)] =\\mathcal{L}_{\\mathrm{VAE}}."
+    ]
+  },
+  "variants/eq-15.svg": {
+    "tag": "15",
+    "latex": "\\log w_k\n=\\log p_\\theta(x\\mid z_k)+\\log p(z_k)-\\log q_\\phi(z_k\\mid x).\n\\tag{15}",
+    "rows": [
+      "\\log w_k =\\log p_\\theta(x\\mid z_k)+\\log p(z_k)-\\log q_\\phi(z_k\\mid x)."
+    ]
+  },
+  "variants/eq-16.svg": {
+    "tag": "16",
+    "latex": "\\log\\left(\\frac1K\\sum_k e^{\\log w_k}\\right)\n=\\operatorname{logsumexp}_k(\\log w_k)-\\log K.\n\\tag{16}",
+    "rows": [
+      "\\log\\left(\\frac{1}{K}\\sum_k e^{\\log w_k}\\right) =\\mathrm{logsumexp}_k(\\log w_k)-\\log K."
+    ]
+  },
+  "variants/eq-17.svg": {
+    "tag": "17",
+    "latex": "z_e(x)=E_\\phi(x)\\in\\mathbb R^D.\n\\tag{17}",
+    "rows": [
+      "z_e(x)=E_\\phi(x)\\in\\mathbb{R}^D."
+    ]
+  },
+  "variants/eq-18.svg": {
+    "tag": "18",
+    "latex": "\\mathcal E=\\{e_1,\\ldots,e_K\\},\\qquad e_k\\in\\mathbb R^D.\n\\tag{18}",
+    "rows": [
+      "\\mathcal{E}=\\{e_1,\\ldots,e_K\\},\\qquad e_k\\in\\mathbb{R}^D."
+    ]
+  },
+  "variants/eq-19.svg": {
+    "tag": "19",
+    "latex": "k^\\*=\\arg\\min_{k\\in\\{1,\\ldots,K\\}}\n\\|z_e(x)-e_k\\|_2^2,\n\\tag{19}",
+    "rows": [
+      "k^*=\\arg\\min_{k\\in\\{1,\\ldots,K\\}} \\|z_e(x)-e_k\\|_2^2"
+    ]
+  },
+  "variants/eq-20.svg": {
+    "tag": "20",
+    "latex": "z_q(x)=e_{k^\\*}.\n\\tag{20}",
+    "rows": [
+      "z_q(x)=e_{k^*}."
+    ]
+  },
+  "variants/eq-21.svg": {
+    "tag": "21",
+    "latex": "\\|z-e_k\\|_2^2\n=\\|z\\|_2^2+\\|e_k\\|_2^2-2z^\\top e_k.\n\\tag{21}",
+    "rows": [
+      "\\|z-e_k\\|_2^2 =\\|z\\|_2^2+\\|e_k\\|_2^2-2z^\\top e_k."
+    ]
+  },
+  "variants/eq-22.svg": {
+    "tag": "22",
+    "latex": "\\boxed{\n\\mathcal J_{\\mathrm{VQ}}\n=\\underbrace{-\\log p_\\theta(x\\mid z_q)}_{\\text{重构}}\n+\\underbrace{\\|\\operatorname{sg}[z_e]-e\\|_2^2}_{\\text{码本损失}}\n+\\beta\\underbrace{\\|z_e-\\operatorname{sg}[e]\\|_2^2}_{\\text{承诺损失}}\n}.\n\\tag{22}",
+    "rows": [
+      "\\mathcal{J}_{\\mathrm{VQ}} =-\\log p_\\theta(x\\mid z_q) +\\|\\mathrm{sg}[z_e]-e\\|_2^2 +\\beta\\|z_e-\\mathrm{sg}[e]\\|_2^2 ."
+    ]
+  },
+  "variants/eq-23.svg": {
+    "tag": "23",
+    "latex": "\\operatorname{sg}[u]=u,\\qquad\n\\frac{\\partial\\operatorname{sg}[u]}{\\partial u}=0.\n\\tag{23}",
+    "rows": [
+      "\\mathrm{sg}[u]=u,\\qquad \\frac{\\partial\\mathrm{sg}[u]}{\\partial u}=0."
+    ]
+  },
+  "variants/eq-24.svg": {
+    "tag": "24",
+    "latex": "z_{\\mathrm{st}}\n=z_e+\\operatorname{sg}[z_q-z_e].\n\\tag{24}",
+    "rows": [
+      "z_{\\mathrm{st}} =z_e+\\mathrm{sg}[z_q-z_e]."
+    ]
+  },
+  "variants/eq-25.svg": {
+    "tag": "25",
+    "latex": "z_{\\mathrm{st}}=z_e+(z_q-z_e)=z_q.\n\\tag{25}",
+    "rows": [
+      "z_{\\mathrm{st}}=z_e+(z_q-z_e)=z_q."
+    ]
+  },
+  "variants/eq-26.svg": {
+    "tag": "26",
+    "latex": "\\frac{\\partial z_{\\mathrm{st}}}{\\partial z_e}\n=1+0=1.\n\\tag{26}",
+    "rows": [
+      "\\frac{\\partial z_{\\mathrm{st}}}{\\partial z_e} =1+0=1."
+    ]
+  }
+}
