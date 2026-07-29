@@ -17,6 +17,9 @@
 - [公式与代码对应表](docs/03-math-to-code.md)
 - [论文和参考实现](docs/04-references.md)
 
+> 独立推导公式已预渲染为仓库内的 SVG 矢量图片：打开 GitHub 页面即可直接查看，
+> 不依赖浏览器的 MathJax/LaTeX 转换，也不会因页面宽度被压成竖列。
+
 ## 总体结构图
 
 ```mermaid
@@ -63,8 +66,8 @@ python -m vae_lab.train --model vq-vae --epochs 5
 - 损失默认对 batch 取平均、对每个样本的像素和潜变量维度求和。
 - `logvar` 表示 `log σ²`，所以标准差是 `exp(0.5 * logvar)`。
 - VQ‑VAE 在这里重点展示离散表示学习；若要无条件生成，还需另学一个离散先验（如 PixelCNN）来采样码索引。
+- 独立公式的可追溯源码保存在 `assets/equations/formulas.json`，网页正文只显示已经排版好的矢量公式。
 
 ## 许可
 
 代码采用 MIT License。文档中的论文、公式思想与外部参考实现归其原作者所有；本仓库的代码为统一接口下的独立教学实现。
-
