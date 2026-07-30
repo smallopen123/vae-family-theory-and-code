@@ -36,7 +36,7 @@
 
 ```math
 p(X=H)=0.6,\qquad p(X=T)=0.4.
-\tag{P1}
+\qquad \text{(P1)}
 ```
 
 通常为了简洁，把随机变量 $`X`$ 取到具体值 $`x`$ 的概率写成 $`p(x)`$。
@@ -51,7 +51,7 @@ p(X=H)=0.6,\qquad p(X=T)=0.4.
 
 ```math
 \Pr(x\le X\le x+\Delta x)\approx p(x)\,\Delta x.
-\tag{P2}
+\qquad \text{(P2)}
 ```
 
 所以 VAE 中口头说“提高图片 $`x`$ 的概率”，更严谨地说是：
@@ -62,7 +62,7 @@ p(X=H)=0.6,\qquad p(X=T)=0.4.
 
 ```math
 \int p(x)\,dx=1.
-\tag{P3}
+\qquad \text{(P3)}
 ```
 
 ---
@@ -92,14 +92,14 @@ $`p(x=1\mid z=0)=0.2`$ 的读法是：
 
 ```math
 p(x=1,z=1)=p(z=1)\,p(x=1\mid z=1)=0.4\times0.9=0.36.
-\tag{P4}
+\qquad \text{(P4)}
 ```
 
 一般地，联合分布的乘法规则是
 
 ```math
 p(x,z)=p(z)\,p(x\mid z)=p(x)\,p(z\mid x).
-\tag{P5}
+\qquad \text{(P5)}
 ```
 
 VAE 选择第一种分解作为生成故事：先生成原因 $`z`$，再由原因生成观测 $`x`$。
@@ -116,7 +116,7 @@ p(x=1)
 &=0.6\times0.2+0.4\times0.9\\
 &=0.48.
 \end{aligned}
-\tag{P6}
+\qquad \text{(P6)}
 ```
 
 这个“把隐藏原因全部加掉”的动作叫**边缘化**。若 $`z`$ 连续，就把求和换成积分：
@@ -124,7 +124,7 @@ p(x=1)
 ```math
 p_\theta(x)=\int p_\theta(x,z)\,dz
 =\int p(z)\,p_\theta(x\mid z)\,dz.
-\tag{P7}
+\qquad \text{(P7)}
 ```
 
 注意：这里不是“积分掉了无用信息”，而是说我们没有观测到 $`z`$，所以必须把每个
@@ -141,7 +141,7 @@ p(z=1\mid x=1)
 &=\frac{p(z=1)p(x=1\mid z=1)}{p(x=1)}\\
 &=\frac{0.4\times0.9}{0.48}=0.75.
 \end{aligned}
-\tag{P8}
+\qquad \text{(P8)}
 ```
 
 先验 $`p(z=1)=0.4`$ 是“没看到延误前”的判断；后验 $`p(z=1\mid x=1)=0.75`$
@@ -165,7 +165,7 @@ VAE 中也是同一件事：
 \mathbb E_{p(z)}[f(z)]
 =\sum_z p(z)f(z)
 =0.6\times10+0.4\times30=18.
-\tag{P9}
+\qquad \text{(P9)}
 ```
 
 下标 $`p(z)`$ 回答的不是“对谁求导”，而是两个问题：
@@ -178,7 +178,7 @@ VAE 中也是同一件事：
 ```math
 \mathbb E_{p(z\mid x=1)}[f(z)]
 =0.25\times10+0.75\times30=25.
-\tag{P10}
+\qquad \text{(P10)}
 ```
 
 因此，即使方括号中的 $`f(z)`$ 完全相同，期望下标不同，结果也会不同。
@@ -188,7 +188,7 @@ VAE 中也是同一件事：
 ```math
 \mathbb E_{q_\phi(z\mid x)}[f(z)]
 =\int q_\phi(z\mid x)\,f(z)\,dz.
-\tag{P11}
+\qquad \text{(P11)}
 ```
 
 逐字读作：
@@ -204,7 +204,7 @@ VAE 中也是同一件事：
 \mathbb E_{q_\phi(z\mid x)}[f(z)]
 \approx \frac1L\sum_{\ell=1}^{L}f(z^{(\ell)}),
 \qquad z^{(\ell)}\sim q_\phi(z\mid x).
-\tag{P12}
+\qquad \text{(P12)}
 ```
 
 这里：
@@ -224,7 +224,7 @@ VAE 中也是同一件事：
 
 ```math
 \mathcal D=(1,1,1,0).
-\tag{P13}
+\qquad \text{(P13)}
 ```
 
 假设四次观测条件独立，整组数据在参数 $`\theta`$ 下的似然为
@@ -233,7 +233,7 @@ VAE 中也是同一件事：
 p_\theta(\mathcal D)
 =\prod_{i=1}^{4}p_\theta(x_i)
 =\theta^3(1-\theta).
-\tag{P14}
+\qquad \text{(P14)}
 ```
 
 它不是“参数 $`\theta`$ 的概率”；$`\theta`$ 在最大似然中是我们可以调整的旋钮。
@@ -255,7 +255,7 @@ $`\theta=0.75`$ 给已经观察到的“三正一反”最高的似然。最大�
 ```math
 \theta_{\mathrm{MLE}}
 =\arg\max_\theta p_\theta(\mathcal D).
-\tag{P15}
+\qquad \text{(P15)}
 ```
 
 ### 4.2 为什么实际最大化对数似然
@@ -265,7 +265,7 @@ $`\theta=0.75`$ 给已经观察到的“三正一反”最高的似然。最大�
 ```math
 \arg\max_\theta p_\theta(\mathcal D)
 =\arg\max_\theta\log p_\theta(\mathcal D).
-\tag{P16}
+\qquad \text{(P16)}
 ```
 
 对数还能把许多很小概率的乘积变为求和：
@@ -273,7 +273,7 @@ $`\theta=0.75`$ 给已经观察到的“三正一反”最高的似然。最大�
 ```math
 \log p_\theta(\mathcal D)
 =\sum_{i=1}^{N}\log p_\theta(x_i).
-\tag{P17}
+\qquad \text{(P17)}
 ```
 
 这样既便于小批量训练，又避免大量小数相乘造成数值下溢。
@@ -285,7 +285,7 @@ $`\theta=0.75`$ 给已经观察到的“三正一反”最高的似然。最大�
 ```math
 \sum_{i=1}^{N}\log p_\theta(x_i)
 =\sum_{i=1}^{N}\log\int p(z_i)p_\theta(x_i\mid z_i)\,dz_i.
-\tag{P18}
+\qquad \text{(P18)}
 ```
 
 直观上，它要求解码器和先验共同做到：
@@ -307,7 +307,7 @@ VAE 的后验由 Bayes 公式给出：
 p_\theta(z\mid x)
 =\frac{p(z)p_\theta(x\mid z)}
 {\int p(z')p_\theta(x\mid z')\,dz'}.
-\tag{P19}
+\qquad \text{(P19)}
 ```
 
 分母需要遍历连续高维潜空间。解码器是非线性神经网络时，这个积分通常没有
@@ -320,7 +320,7 @@ p_\theta(z\mid x)
 q_\phi(z\mid x)
 =\mathcal N\!\left(z;\mu_\phi(x),
 \operatorname{diag}(\sigma_\phi^2(x))\right).
-\tag{P20}
+\qquad \text{(P20)}
 ```
 
 $`q`$ 的角色不是替换生成模型中的先验 $`p(z)`$，而是帮助我们在看见 $`x`$ 后，
@@ -337,14 +337,14 @@ $`q`$ 的角色不是替换生成模型中的先验 $`p(z)`$，而是帮助我�
 =\mathcal L(\theta,\phi;x)
 +D_{\mathrm{KL}}\!\left(
 q_\phi(z\mid x)\,\|\,p_\theta(z\mid x)\right).
-\tag{P21}
+\qquad \text{(P21)}
 ```
 
 KL 散度永远非负，所以
 
 ```math
 \log p_\theta(x)\ge \mathcal L(\theta,\phi;x).
-\tag{P22}
+\qquad \text{(P22)}
 ```
 
 这就是“证据下界”：证据指 $`p_\theta(x)`$，下界指 $`\mathcal L`$ 不超过它。
@@ -360,7 +360,7 @@ KL 散度永远非负，所以
 =\mathbb E_{q_\phi(z\mid x)}
 [\log p_\theta(x\mid z)]
 -D_{\mathrm{KL}}\!\left(q_\phi(z\mid x)\,\|\,p(z)\right).
-\tag{P23}
+\qquad \text{(P23)}
 ```
 
 逐项解释：
@@ -378,7 +378,7 @@ KL 散度永远非负，所以
 =-\mathcal L
 =\underbrace{-\mathbb E_q[\log p_\theta(x\mid z)]}_{\text{重构负对数似然}}
 +\underbrace{D_{\mathrm{KL}}(q_\phi(z\mid x)\|p(z))}_{\text{KL 正则}}.
-\tag{P24}
+\qquad \text{(P24)}
 ```
 
 若像素采用 Bernoulli 似然，第一项就是二元交叉熵 BCE。代码里的
@@ -407,7 +407,7 @@ flowchart LR
 ```math
 \epsilon\sim\mathcal N(0,I),\qquad
 z=\mu_\phi(x)+\sigma_\phi(x)\odot\epsilon.
-\tag{P25}
+\qquad \text{(P25)}
 ```
 
 随机性被隔离在不含参数的 $`\epsilon`$ 中，$`z`$ 对 $`\mu_\phi`$ 和

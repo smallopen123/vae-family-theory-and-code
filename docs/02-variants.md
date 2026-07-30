@@ -16,7 +16,7 @@
 \mathcal L_{\mathrm{VAE}}
 =\mathbb E_q[\log p_\theta(x\mid z)]
 -D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p(z)).
-\tag{1}
+\qquad \text{(1)}
 ```
 
 β‑VAE 修改为
@@ -27,7 +27,7 @@
 =\mathbb E_q[\log p_\theta(x\mid z)]
 -\beta D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p(z))
 }.
-\tag{2}
+\qquad \text{(2)}
 ```
 
 它可从约束优化得到。希望重构尽可能好，同时限制每个样本的平均编码容量：
@@ -38,7 +38,7 @@
 \quad
 \text{s.t.}\quad
 D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p(z))\le C.
-\tag{3}
+\qquad \text{(3)}
 ```
 
 构造 Lagrangian：
@@ -51,7 +51,7 @@ D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p(z))\le C.
 &=\mathbb E_q[\log p_\theta(x\mid z)]
 -\beta D_{\mathrm{KL}}+\beta C.
 \end{aligned}
-\tag{4}
+\qquad \text{(4)}
 ```
 
 $`C`$ 固定时 $`\beta C`$ 不影响参数最优点，于是得到式 (2)。
@@ -68,14 +68,14 @@ $`C`$ 固定时 $`\beta C`$ 不影响参数最优点，于是得到式 (2)。
 
 ```math
 p_\theta(x\mid c)=\int p_\theta(x,z\mid c)\,dz.
-\tag{5}
+\qquad \text{(5)}
 ```
 
 常用分解为
 
 ```math
 p_\theta(x,z\mid c)=p(z\mid c)p_\theta(x\mid z,c).
-\tag{6}
+\qquad \text{(6)}
 ```
 
 引入近似后验 $`q_\phi(z\mid x,c)`$。乘除它：
@@ -94,7 +94,7 @@ p_\theta(x,z\mid c)=p(z\mid c)p_\theta(x\mid z,c).
 \mathbb E_q[\log p_\theta(x\mid z,c)]
 -D_{\mathrm{KL}}(q_\phi(z\mid x,c)\Vert p(z\mid c)).
 \end{aligned}
-\tag{7}
+\qquad \text{(7)}
 ```
 
 若取与条件无关的先验 $`p(z\mid c)=p(z)=\mathcal N(0,I)`$：
@@ -105,7 +105,7 @@ p_\theta(x,z\mid c)=p(z\mid c)p_\theta(x\mid z,c).
 =\mathbb E_q[\log p_\theta(x\mid z,c)]
 -D_{\mathrm{KL}}(q_\phi(z\mid x,c)\Vert p(z))
 }.
-\tag{8}
+\qquad \text{(8)}
 ```
 
 ```mermaid
@@ -129,7 +129,7 @@ $`z\sim p(z)`$。若使用可学习条件先验 $`p_\psi(z\mid c)`$，则生成�
 
 ```math
 w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
-\tag{9}
+\qquad \text{(9)}
 ```
 
 因为
@@ -138,7 +138,7 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 \mathbb E_{q_\phi(z\mid x)}[w(z)]
 =\int q(z\mid x)\frac{p_\theta(x,z)}{q(z\mid x)}dz
 =p_\theta(x),
-\tag{10}
+\qquad \text{(10)}
 ```
 
 取 $`K`$ 个独立样本 $`z_1,\ldots,z_K\sim q_\phi(z\mid x)`$，有
@@ -147,7 +147,7 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 \hat p_K(x)=\frac1K\sum_{k=1}^{K}w(z_k),
 \qquad
 \mathbb E[\hat p_K(x)]=p_\theta(x).
-\tag{11}
+\qquad \text{(11)}
 ```
 
 对 $`\log`$ 使用 Jensen 不等式：
@@ -159,7 +159,7 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 &\ge\mathbb E_{z_{1:K}}[\log\hat p_K(x)]\\
 &\equiv\mathcal L_K.
 \end{aligned}
-\tag{12}
+\qquad \text{(12)}
 ```
 
 因此
@@ -173,7 +173,7 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 \frac{p_\theta(x,z_k)}{q_\phi(z_k\mid x)}
 \right]
 }.
-\tag{13}
+\qquad \text{(13)}
 ```
 
 当 $`K=1`$：
@@ -182,7 +182,7 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 \mathcal L_1
 =\mathbb E_q[\log p_\theta(x,z)-\log q_\phi(z\mid x)]
 =\mathcal L_{\mathrm{VAE}}.
-\tag{14}
+\qquad \text{(14)}
 ```
 
 实现时令
@@ -190,7 +190,7 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 ```math
 \log w_k
 =\log p_\theta(x\mid z_k)+\log p(z_k)-\log q_\phi(z_k\mid x).
-\tag{15}
+\qquad \text{(15)}
 ```
 
 为避免指数溢出，使用
@@ -198,7 +198,7 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 ```math
 \log\left(\frac1K\sum_k e^{\log w_k}\right)
 =\operatorname{logsumexp}_k(\log w_k)-\log K.
-\tag{16}
+\qquad \text{(16)}
 ```
 
 在常见条件下 $`\mathcal L_K`$ 随 $`K`$ 增大而变紧，且极限趋近
@@ -224,14 +224,14 @@ VQ‑VAE 编码器先输出连续向量
 
 ```math
 z_e(x)=E_\phi(x)\in\mathbb R^D.
-\tag{17}
+\qquad \text{(17)}
 ```
 
 维护包含 $`K`$ 个向量的码本
 
 ```math
 \mathcal E=\{e_1,\ldots,e_K\},\qquad e_k\in\mathbb R^D.
-\tag{18}
+\qquad \text{(18)}
 ```
 
 通过最近邻选择离散索引：
@@ -239,12 +239,12 @@ z_e(x)=E_\phi(x)\in\mathbb R^D.
 ```math
 k^\*=\arg\min_{k\in\{1,\ldots,K\}}
 \|z_e(x)-e_k\|_2^2,
-\tag{19}
+\qquad \text{(19)}
 ```
 
 ```math
 z_q(x)=e_{k^\*}.
-\tag{20}
+\qquad \text{(20)}
 ```
 
 距离可高效展开：
@@ -252,7 +252,7 @@ z_q(x)=e_{k^\*}.
 ```math
 \|z-e_k\|_2^2
 =\|z\|_2^2+\|e_k\|_2^2-2z^\top e_k.
-\tag{21}
+\qquad \text{(21)}
 ```
 
 总损失为
@@ -264,7 +264,7 @@ z_q(x)=e_{k^\*}.
 +\underbrace{\|\operatorname{sg}[z_e]-e\|_2^2}_{\text{码本损失}}
 +\beta\underbrace{\|z_e-\operatorname{sg}[e]\|_2^2}_{\text{承诺损失}}
 }.
-\tag{22}
+\qquad \text{(22)}
 ```
 
 $`\operatorname{sg}`$ 是 stop-gradient：
@@ -272,7 +272,7 @@ $`\operatorname{sg}`$ 是 stop-gradient：
 ```math
 \operatorname{sg}[u]=u,\qquad
 \frac{\partial\operatorname{sg}[u]}{\partial u}=0.
-\tag{23}
+\qquad \text{(23)}
 ```
 
 逐项看梯度：
@@ -286,14 +286,14 @@ $`\operatorname{sg}`$ 是 stop-gradient：
 ```math
 z_{\mathrm{st}}
 =z_e+\operatorname{sg}[z_q-z_e].
-\tag{24}
+\qquad \text{(24)}
 ```
 
 前向数值：
 
 ```math
 z_{\mathrm{st}}=z_e+(z_q-z_e)=z_q.
-\tag{25}
+\qquad \text{(25)}
 ```
 
 反向导数：
@@ -301,7 +301,7 @@ z_{\mathrm{st}}=z_e+(z_q-z_e)=z_q.
 ```math
 \frac{\partial z_{\mathrm{st}}}{\partial z_e}
 =1+0=1.
-\tag{26}
+\qquad \text{(26)}
 ```
 
 因此解码器前向看到量化向量，而重构梯度像恒等映射一样传给编码器。

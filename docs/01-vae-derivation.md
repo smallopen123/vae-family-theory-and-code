@@ -9,7 +9,7 @@
 
 ```math
 p_\theta(x,z)=p(z)p_\theta(x\mid z).
-\tag{1}
+\qquad \text{(1)}
 ```
 
 其中：
@@ -33,7 +33,7 @@ flowchart LR
 ```math
 \log p_\theta(x)=\log\int p_\theta(x,z)\,dz
 =\log\int p(z)p_\theta(x\mid z)\,dz.
-\tag{2}
+\qquad \text{(2)}
 ```
 
 困难在于：神经网络使积分通常没有解析解。
@@ -47,14 +47,14 @@ p_\theta(z\mid x)
 =\frac{p_\theta(x,z)}{p_\theta(x)}
 =\frac{p(z)p_\theta(x\mid z)}
 {\int p(z)p_\theta(x\mid z)\,dz}.
-\tag{3}
+\qquad \text{(3)}
 ```
 
 分母正是难算的边缘似然。于是引入编码器给出的可计算分布
 
 ```math
 q_\phi(z\mid x)\approx p_\theta(z\mid x),
-\tag{4}
+\qquad \text{(4)}
 ```
 
 其中 $`\phi`$ 是推断模型参数。常用对角高斯：
@@ -65,7 +65,7 @@ q_\phi(z\mid x)
 z;\mu_\phi(x),
 \operatorname{diag}(\sigma_\phi^2(x))
 \right).
-\tag{5}
+\qquad \text{(5)}
 ```
 
 对角假设意味着给定 $`x`$ 后各潜变量条件独立：
@@ -73,7 +73,7 @@ z;\mu_\phi(x),
 ```math
 q_\phi(z\mid x)=\prod_{j=1}^{d}
 \mathcal N(z_j;\mu_j,\sigma_j^2).
-\tag{6}
+\qquad \text{(6)}
 ```
 
 ## 3. ELBO 推导方法一：乘除变分分布并用 Jensen 不等式
@@ -89,14 +89,14 @@ q_\phi(z\mid x)=\prod_{j=1}^{d}
 &=\log\mathbb E_{q_\phi(z\mid x)}
 \left[\frac{p_\theta(x,z)}{q_\phi(z\mid x)}\right].
 \end{aligned}
-\tag{7}
+\qquad \text{(7)}
 ```
 
 因为 $`\log`$ 是凹函数，Jensen 不等式给出
 
 ```math
 \log\mathbb E[Y]\ge \mathbb E[\log Y].
-\tag{8}
+\qquad \text{(8)}
 ```
 
 令 $`Y=p_\theta(x,z)/q_\phi(z\mid x)`$，得到
@@ -115,7 +115,7 @@ q_\phi(z\mid x)=\prod_{j=1}^{d}
 ]\\
 &\equiv \mathcal L(\theta,\phi;x).
 \end{aligned}
-\tag{9}
+\qquad \text{(9)}
 ```
 
 $`\mathcal L`$ 称为证据下界，即 ELBO。
@@ -134,7 +134,7 @@ $`\mathcal L`$ 称为证据下界，即 ELBO。
 \log\frac{q_\phi(z\mid x)}{p(z)}
 \right]}_{D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p(z))}.
 \end{aligned}
-\tag{10}
+\qquad \text{(10)}
 ```
 
 所以
@@ -145,7 +145,7 @@ $`\mathcal L`$ 称为证据下界，即 ELBO。
 =\mathbb E_{q_\phi(z\mid x)}[\log p_\theta(x\mid z)]
 -D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p(z))
 }.
-\tag{11}
+\qquad \text{(11)}
 ```
 
 训练代码通常最小化负 ELBO：
@@ -156,7 +156,7 @@ $`\mathcal L`$ 称为证据下界，即 ELBO。
 =-\mathcal L
 =\mathcal J_{\mathrm{rec}}+\mathcal J_{\mathrm{KL}}
 }.
-\tag{12}
+\qquad \text{(12)}
 ```
 
 ## 4. ELBO 推导方法二：精确分解与“下界间隙”
@@ -168,7 +168,7 @@ D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p_\theta(z\mid x))
 =\mathbb E_q\left[
 \log\frac{q_\phi(z\mid x)}{p_\theta(z\mid x)}
 \right].
-\tag{13}
+\qquad \text{(13)}
 ```
 
 由 Bayes 公式
@@ -176,7 +176,7 @@ D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p_\theta(z\mid x))
 ```math
 \log p_\theta(z\mid x)
 =\log p_\theta(x,z)-\log p_\theta(x).
-\tag{14}
+\qquad \text{(14)}
 ```
 
 代入式 (13)：
@@ -193,7 +193,7 @@ D_{\mathrm{KL}}(q\Vert p_\theta)
 ]\\
 &=\log p_\theta(x)-\mathcal L(\theta,\phi;x).
 \end{aligned}
-\tag{15}
+\qquad \text{(15)}
 ```
 
 移项得到精确恒等式
@@ -204,7 +204,7 @@ D_{\mathrm{KL}}(q\Vert p_\theta)
 =\mathcal L(\theta,\phi;x)
 +D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p_\theta(z\mid x))
 }.
-\tag{16}
+\qquad \text{(16)}
 ```
 
 KL 散度非负，因此 $`\mathcal L\le\log p_\theta(x)`$。同时，最大化 ELBO 做了两件事：
@@ -225,7 +225,7 @@ flowchart TB
 
 ```math
 q(z)=\mathcal N(\mu,\sigma^2),\qquad p(z)=\mathcal N(0,1).
-\tag{17}
+\qquad \text{(17)}
 ```
 
 两者对数密度为
@@ -233,12 +233,12 @@ q(z)=\mathcal N(\mu,\sigma^2),\qquad p(z)=\mathcal N(0,1).
 ```math
 \log q(z)=-\frac12\log(2\pi\sigma^2)
 -\frac{(z-\mu)^2}{2\sigma^2},
-\tag{18}
+\qquad \text{(18)}
 ```
 
 ```math
 \log p(z)=-\frac12\log(2\pi)-\frac{z^2}{2}.
-\tag{19}
+\qquad \text{(19)}
 ```
 
 根据 KL 定义，
@@ -251,7 +251,7 @@ D_{\mathrm{KL}}(q\Vert p)
 -\log\sigma^2-\frac{(z-\mu)^2}{\sigma^2}+z^2
 \right].
 \end{aligned}
-\tag{20}
+\qquad \text{(20)}
 ```
 
 对 $`z\sim\mathcal N(\mu,\sigma^2)`$，有
@@ -261,7 +261,7 @@ D_{\mathrm{KL}}(q\Vert p)
 \qquad
 \mathbb E_q[z^2]=\operatorname{Var}(z)+(\mathbb E z)^2
 =\sigma^2+\mu^2.
-\tag{21}
+\qquad \text{(21)}
 ```
 
 因此
@@ -274,7 +274,7 @@ D_{\mathrm{KL}}(q\Vert p)
 ]\\
 &=\frac12(\mu^2+\sigma^2-1-\log\sigma^2).
 \end{aligned}
-\tag{22}
+\qquad \text{(22)}
 ```
 
 对 $`d`$ 维对角高斯，各维相加：
@@ -285,7 +285,7 @@ D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert\mathcal N(0,I))
 =\frac12\sum_{j=1}^{d}
 (\mu_j^2+\sigma_j^2-1-\log\sigma_j^2)
 }.
-\tag{23}
+\qquad \text{(23)}
 ```
 
 代码存储 $`\ell_j=\log\sigma_j^2`$，则 $`\sigma_j^2=e^{\ell_j}`$：
@@ -295,7 +295,7 @@ D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert\mathcal N(0,I))
 D_{\mathrm{KL}}
 =-\frac12\sum_j(1+\ell_j-\mu_j^2-e^{\ell_j})
 }.
-\tag{24}
+\qquad \text{(24)}
 ```
 
 这正是 `kl_standard_normal(mu, logvar)`。
@@ -309,7 +309,7 @@ D_{\mathrm{KL}}
 ```math
 p_\theta(x\mid z)=\prod_{i=1}^{D}
 \hat x_i^{x_i}(1-\hat x_i)^{1-x_i}.
-\tag{25}
+\qquad \text{(25)}
 ```
 
 取负对数：
@@ -317,7 +317,7 @@ p_\theta(x\mid z)=\prod_{i=1}^{D}
 ```math
 -\log p_\theta(x\mid z)
 =-\sum_i[x_i\log\hat x_i+(1-x_i)\log(1-\hat x_i)].
-\tag{26}
+\qquad \text{(26)}
 ```
 
 这就是二元交叉熵 BCE。实际代码让网络输出 logits $`a_i`$，用
@@ -330,7 +330,7 @@ $`\hat x_i=\operatorname{sigmoid}(a_i)`$，再调用数值稳定的
 
 ```math
 p_\theta(x\mid z)=\mathcal N(x;f_\theta(z),\sigma_x^2 I),
-\tag{27}
+\qquad \text{(27)}
 ```
 
 则
@@ -339,7 +339,7 @@ p_\theta(x\mid z)=\mathcal N(x;f_\theta(z),\sigma_x^2 I),
 -\log p_\theta(x\mid z)
 =\frac{D}{2}\log(2\pi\sigma_x^2)
 +\frac{1}{2\sigma_x^2}\|x-f_\theta(z)\|_2^2.
-\tag{28}
+\qquad \text{(28)}
 ```
 
 当 $`\sigma_x^2`$ 固定时，第一项是常数，最大化似然等价于最小化带比例系数的 MSE。BCE/MSE 不是任意选择，而是对应不同的观测分布假设。
@@ -350,7 +350,7 @@ p_\theta(x\mid z)=\mathcal N(x;f_\theta(z),\sigma_x^2 I),
 
 ```math
 \mathbb E_{q_\phi(z\mid x)}[f_\theta(z)].
-\tag{29}
+\qquad \text{(29)}
 ```
 
 朴素采样 $`z\sim q_\phi`$ 时，采样节点依赖 $`\phi`$，普通反向传播不能直接穿过随机抽样操作。对高斯分布，写成
@@ -359,7 +359,7 @@ p_\theta(x\mid z)=\mathcal N(x;f_\theta(z),\sigma_x^2 I),
 \epsilon\sim\mathcal N(0,I),
 \qquad
 z=\mu_\phi(x)+\sigma_\phi(x)\odot\epsilon.
-\tag{30}
+\qquad \text{(30)}
 ```
 
 随机性被移到与参数无关的 $`\epsilon`$，于是
@@ -370,7 +370,7 @@ z=\mu_\phi(x)+\sigma_\phi(x)\odot\epsilon.
 \left[
 f_\theta(\mu_\phi(x)+\sigma_\phi(x)\odot\epsilon)
 \right].
-\tag{31}
+\qquad \text{(31)}
 ```
 
 梯度可写为
@@ -380,7 +380,7 @@ f_\theta(\mu_\phi(x)+\sigma_\phi(x)\odot\epsilon)
 =\mathbb E_\epsilon[
 \nabla_z f_\theta(z)\nabla_\phi g_\phi(x,\epsilon)
 ].
-\tag{32}
+\qquad \text{(32)}
 ```
 
 用一个 Monte Carlo 样本近似：
@@ -389,7 +389,7 @@ f_\theta(\mu_\phi(x)+\sigma_\phi(x)\odot\epsilon)
 \mathbb E_q[\log p_\theta(x\mid z)]
 \approx \log p_\theta(x\mid z^{(1)}),
 \quad z^{(1)}=\mu+\sigma\odot\epsilon^{(1)}.
-\tag{33}
+\qquad \text{(33)}
 ```
 
 KL 项已有闭式解，因此不必采样估计。
@@ -401,7 +401,7 @@ KL 项已有闭式解，因此不必采样估计。
 ```math
 \mathcal L_{\mathrm{dataset}}
 =\sum_{n=1}^{N}\mathcal L(\theta,\phi;x^{(n)}).
-\tag{34}
+\qquad \text{(34)}
 ```
 
 随机小批量 $`B`$ 提供无偏缩放估计：
@@ -409,7 +409,7 @@ KL 项已有闭式解，因此不必采样估计。
 ```math
 \mathcal L_{\mathrm{dataset}}
 \approx\frac{N}{|B|}\sum_{x\in B}\mathcal L(\theta,\phi;x).
-\tag{35}
+\qquad \text{(35)}
 ```
 
 若只关心寻找最优参数，省略常数 $`N`$，代码通常最小化 batch 平均负 ELBO。
@@ -442,7 +442,7 @@ sequenceDiagram
 -\log p_\theta(x\mid z)
 +\frac12\sum_j(\mu_j^2+e^{\ell_j}-1-\ell_j)
 \right].
-\tag{36}
+\qquad \text{(36)}
 ```
 
 ## 10. 常见误区
