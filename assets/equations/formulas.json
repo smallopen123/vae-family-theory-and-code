@@ -446,5 +446,185 @@
     "rows": [
       "\\frac{\\partial z_{\\mathrm{st}}}{\\partial z_e} =1+0=1."
     ]
+  },
+  "probability/eq-01.svg": {
+    "tag": "P1",
+    "latex": "p(X=H)=0.6,\\qquad p(X=T)=0.4.\n\\tag{P1}",
+    "rows": [
+      "p(X=H)=0.6,\\qquad p(X=T)=0.4."
+    ]
+  },
+  "probability/eq-02.svg": {
+    "tag": "P2",
+    "latex": "\\Pr(x\\le X\\le x+\\Delta x)\\approx p(x)\\,\\Delta x.\n\\tag{P2}",
+    "rows": [
+      "\\Pr(x\\leq X\\leq x+\\Delta x)\\approx p(x)\\,\\Delta x."
+    ]
+  },
+  "probability/eq-03.svg": {
+    "tag": "P3",
+    "latex": "\\int p(x)\\,dx=1.\n\\tag{P3}",
+    "rows": [
+      "\\int p(x)\\,dx=1."
+    ]
+  },
+  "probability/eq-04.svg": {
+    "tag": "P4",
+    "latex": "p(x=1,z=1)=p(z=1)\\,p(x=1\\mid z=1)=0.4\\times0.9=0.36.\n\\tag{P4}",
+    "rows": [
+      "p(x=1,z=1)=p(z=1)\\,p(x=1\\mid z=1)=0.4\\times0.9=0.36."
+    ]
+  },
+  "probability/eq-05.svg": {
+    "tag": "P5",
+    "latex": "p(x,z)=p(z)\\,p(x\\mid z)=p(x)\\,p(z\\mid x).\n\\tag{P5}",
+    "rows": [
+      "p(x,z)=p(z)\\,p(x\\mid z)=p(x)\\,p(z\\mid x)."
+    ]
+  },
+  "probability/eq-06.svg": {
+    "tag": "P6",
+    "latex": "\\begin{aligned}\np(x=1)\n&=\\sum_z p(x=1,z)\\\\\n&=p(z=0)p(x=1\\mid z=0)+p(z=1)p(x=1\\mid z=1)\\\\\n&=0.6\\times0.2+0.4\\times0.9\\\\\n&=0.48.\n\\end{aligned}\n\\tag{P6}",
+    "rows": [
+      "p(x=1) =\\sum_z p(x=1,z)",
+      "=p(z=0)p(x=1\\mid z=0)+p(z=1)p(x=1\\mid z=1)",
+      "=0.6\\times0.2+0.4\\times0.9",
+      "=0.48."
+    ]
+  },
+  "probability/eq-07.svg": {
+    "tag": "P7",
+    "latex": "p_\\theta(x)=\\int p_\\theta(x,z)\\,dz\n=\\int p(z)\\,p_\\theta(x\\mid z)\\,dz.\n\\tag{P7}",
+    "rows": [
+      "p_\\theta(x)=\\int p_\\theta(x,z)\\,dz =\\int p(z)\\,p_\\theta(x\\mid z)\\,dz."
+    ]
+  },
+  "probability/eq-08.svg": {
+    "tag": "P8",
+    "latex": "\\begin{aligned}\np(z=1\\mid x=1)\n&=\\frac{p(x=1,z=1)}{p(x=1)}\\\\\n&=\\frac{p(z=1)p(x=1\\mid z=1)}{p(x=1)}\\\\\n&=\\frac{0.4\\times0.9}{0.48}=0.75.\n\\end{aligned}\n\\tag{P8}",
+    "rows": [
+      "p(z=1\\mid x=1) =\\frac{p(x=1,z=1)}{p(x=1)}",
+      "=\\frac{p(z=1)p(x=1\\mid z=1)}{p(x=1)}",
+      "=\\frac{0.4\\times0.9}{0.48}=0.75."
+    ]
+  },
+  "probability/eq-09.svg": {
+    "tag": "P9",
+    "latex": "\\mathbb E_{p(z)}[f(z)]\n=\\sum_z p(z)f(z)\n=0.6\\times10+0.4\\times30=18.\n\\tag{P9}",
+    "rows": [
+      "\\mathbb{E}_{p(z)}[f(z)] =\\sum_z p(z)f(z) =0.6\\times10+0.4\\times30=18."
+    ]
+  },
+  "probability/eq-10.svg": {
+    "tag": "P10",
+    "latex": "\\mathbb E_{p(z\\mid x=1)}[f(z)]\n=0.25\\times10+0.75\\times30=25.\n\\tag{P10}",
+    "rows": [
+      "\\mathbb{E}_{p(z\\mid x=1)}[f(z)] =0.25\\times10+0.75\\times30=25."
+    ]
+  },
+  "probability/eq-11.svg": {
+    "tag": "P11",
+    "latex": "\\mathbb E_{q_\\phi(z\\mid x)}[f(z)]\n=\\int q_\\phi(z\\mid x)\\,f(z)\\,dz.\n\\tag{P11}",
+    "rows": [
+      "\\mathbb{E}_{q_\\phi(z\\mid x)}[f(z)] =\\int q_\\phi(z\\mid x)\\,f(z)\\,dz."
+    ]
+  },
+  "probability/eq-12.svg": {
+    "tag": "P12",
+    "latex": "\\mathbb E_{q_\\phi(z\\mid x)}[f(z)]\n\\approx \\frac1L\\sum_{\\ell=1}^{L}f(z^{(\\ell)}),\n\\qquad z^{(\\ell)}\\sim q_\\phi(z\\mid x).\n\\tag{P12}",
+    "rows": [
+      "\\mathbb{E}_{q_\\phi(z\\mid x)}[f(z)] \\approx \\frac{1}{L}\\sum_{\\ell=1}^{L}f(z^{(\\ell)}), \\qquad z^{(\\ell)}\\sim q_\\phi(z\\mid x)."
+    ]
+  },
+  "probability/eq-13.svg": {
+    "tag": "P13",
+    "latex": "\\mathcal D=(1,1,1,0).\n\\tag{P13}",
+    "rows": [
+      "\\mathcal{D}=(1,1,1,0)."
+    ]
+  },
+  "probability/eq-14.svg": {
+    "tag": "P14",
+    "latex": "p_\\theta(\\mathcal D)\n=\\prod_{i=1}^{4}p_\\theta(x_i)\n=\\theta^3(1-\\theta).\n\\tag{P14}",
+    "rows": [
+      "p_\\theta(\\mathcal{D}) =\\prod_{i=1}^{4}p_\\theta(x_i) =\\theta^3(1-\\theta)."
+    ]
+  },
+  "probability/eq-15.svg": {
+    "tag": "P15",
+    "latex": "\\theta_{\\mathrm{MLE}}\n=\\arg\\max_\\theta p_\\theta(\\mathcal D).\n\\tag{P15}",
+    "rows": [
+      "\\theta_{\\mathrm{MLE}} =\\arg\\max_\\theta p_\\theta(\\mathcal{D})."
+    ]
+  },
+  "probability/eq-16.svg": {
+    "tag": "P16",
+    "latex": "\\arg\\max_\\theta p_\\theta(\\mathcal D)\n=\\arg\\max_\\theta\\log p_\\theta(\\mathcal D).\n\\tag{P16}",
+    "rows": [
+      "\\arg\\max_\\theta p_\\theta(\\mathcal{D}) =\\arg\\max_\\theta\\log p_\\theta(\\mathcal{D})."
+    ]
+  },
+  "probability/eq-17.svg": {
+    "tag": "P17",
+    "latex": "\\log p_\\theta(\\mathcal D)\n=\\sum_{i=1}^{N}\\log p_\\theta(x_i).\n\\tag{P17}",
+    "rows": [
+      "\\log p_\\theta(\\mathcal{D}) =\\sum_{i=1}^{N}\\log p_\\theta(x_i)."
+    ]
+  },
+  "probability/eq-18.svg": {
+    "tag": "P18",
+    "latex": "\\sum_{i=1}^{N}\\log p_\\theta(x_i)\n=\\sum_{i=1}^{N}\\log\\int p(z_i)p_\\theta(x_i\\mid z_i)\\,dz_i.\n\\tag{P18}",
+    "rows": [
+      "\\sum_{i=1}^{N}\\log p_\\theta(x_i) =\\sum_{i=1}^{N}\\log\\int p(z_i)p_\\theta(x_i\\mid z_i)\\,dz_i."
+    ]
+  },
+  "probability/eq-19.svg": {
+    "tag": "P19",
+    "latex": "p_\\theta(z\\mid x)\n=\\frac{p(z)p_\\theta(x\\mid z)}\n{\\int p(z')p_\\theta(x\\mid z')\\,dz'}.\n\\tag{P19}",
+    "rows": [
+      "p_\\theta(z\\mid x) =\\frac{p(z)p_\\theta(x\\mid z)} {\\int p(z')p_\\theta(x\\mid z')\\,dz'}."
+    ]
+  },
+  "probability/eq-20.svg": {
+    "tag": "P20",
+    "latex": "q_\\phi(z\\mid x)\n=\\mathcal N\\!\\left(z;\\mu_\\phi(x),\n\\operatorname{diag}(\\sigma_\\phi^2(x))\\right).\n\\tag{P20}",
+    "rows": [
+      "q_\\phi(z\\mid x) =\\mathcal{N}\\!\\left(z;\\mu_\\phi(x), \\mathrm{diag}(\\sigma_\\phi^2(x))\\right)."
+    ]
+  },
+  "probability/eq-21.svg": {
+    "tag": "P21",
+    "latex": "\\log p_\\theta(x)\n=\\mathcal L(\\theta,\\phi;x)\n+D_{\\mathrm{KL}}\\!\\left(\nq_\\phi(z\\mid x)\\,\\|\\,p_\\theta(z\\mid x)\\right).\n\\tag{P21}",
+    "rows": [
+      "\\log p_\\theta(x) =\\mathcal{L}(\\theta,\\phi;x) +D_{\\mathrm{KL}}\\!\\left( q_\\phi(z\\mid x)\\,\\|\\,p_\\theta(z\\mid x)\\right)."
+    ]
+  },
+  "probability/eq-22.svg": {
+    "tag": "P22",
+    "latex": "\\log p_\\theta(x)\\ge \\mathcal L(\\theta,\\phi;x).\n\\tag{P22}",
+    "rows": [
+      "\\log p_\\theta(x)\\geq \\mathcal{L}(\\theta,\\phi;x)."
+    ]
+  },
+  "probability/eq-23.svg": {
+    "tag": "P23",
+    "latex": "\\mathcal L(\\theta,\\phi;x)\n=\\mathbb E_{q_\\phi(z\\mid x)}\n[\\log p_\\theta(x\\mid z)]\n-D_{\\mathrm{KL}}\\!\\left(q_\\phi(z\\mid x)\\,\\|\\,p(z)\\right).\n\\tag{P23}",
+    "rows": [
+      "\\mathcal{L}(\\theta,\\phi;x) =\\mathbb{E}_{q_\\phi(z\\mid x)} [\\log p_\\theta(x\\mid z)] -D_{\\mathrm{KL}}\\!\\left(q_\\phi(z\\mid x)\\,\\|\\,p(z)\\right)."
+    ]
+  },
+  "probability/eq-24.svg": {
+    "tag": "P24",
+    "latex": "\\mathrm{loss}\n=-\\mathcal L\n=\\underbrace{-\\mathbb E_q[\\log p_\\theta(x\\mid z)]}_{\\text{重构负对数似然}}\n+\\underbrace{D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\|p(z))}_{\\text{KL 正则}}.\n\\tag{P24}",
+    "rows": [
+      "\\mathrm{loss} =-\\mathcal{L} =-\\mathbb{E}_q[\\log p_\\theta(x\\mid z)] +D_{\\mathrm{KL}}(q_\\phi(z\\mid x)\\|p(z))."
+    ]
+  },
+  "probability/eq-25.svg": {
+    "tag": "P25",
+    "latex": "\\epsilon\\sim\\mathcal N(0,I),\\qquad\nz=\\mu_\\phi(x)+\\sigma_\\phi(x)\\odot\\epsilon.\n\\tag{P25}",
+    "rows": [
+      "\\epsilon\\sim\\mathcal{N}(0,I),\\qquad z=\\mu_\\phi(x)+\\sigma_\\phi(x)\\odot\\epsilon."
+    ]
   }
 }

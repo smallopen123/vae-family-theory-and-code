@@ -9,6 +9,12 @@
 5. Burda, Y., Grosse, R., & Salakhutdinov, R. (2015). [Importance Weighted Autoencoders](https://arxiv.org/abs/1509.00519).
 6. van den Oord, A., Vinyals, O., & Kavukcuoglu, K. (2017). [Neural Discrete Representation Learning](https://arxiv.org/abs/1711.00937). VQ‑VAE 原始论文。
 
+## 概率基础学习路线
+
+1. Kevin P. Murphy. [Probabilistic Machine Learning: An Introduction](https://probml.github.io/pml-book/book1.html). MIT Press, 2022。官方页面提供合法公开草稿、目录、图和配套代码；适合补随机变量、概率密度、条件概率、期望、最大似然和潜变量模型。
+2. [An Introduction to Variational Autoencoders](https://arxiv.org/abs/1906.02691) 比原始 VAE 论文更适合作为第二遍系统阅读。建议先读本仓库的数字例子，再读其中的潜变量模型、变分推断和重参数化章节。
+3. [PyTorch 官方 Examples 入口](https://docs.pytorch.org/examples/) 与其 [VAE 源代码](https://github.com/pytorch/examples/tree/main/vae) 适合核对 `BCE + KL`、重参数化和训练循环；短代码示例不能替代概率推导。
+
 ## 经检索的参考实现
 
 下列仓库用于交叉核对常见工程写法。本仓库代码是统一接口下的独立教学实现，并非复制：

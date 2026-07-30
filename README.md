@@ -4,6 +4,16 @@
 
 ## 内容导航
 
+### 第一次学习请从这里开始
+
+- [零概率基础：看懂 VAE 的概率语言](docs/00-probability-language-for-vae.md)
+- [可手算的概率、最大似然与 ELBO 实验](examples/probability_walkthrough.py)
+- [逐张量查看一次 PyTorch VAE 损失](examples/vae_loss_walkthrough.py)
+
+新教程先用天气与航班延误的离散例子算出联合、边缘、后验和期望，再用
+“三次正面、一次反面”解释为什么最大化观测数据的似然，最后才进入 ELBO。
+所有例子都给出具体数字，不要求先接受抽象符号。
+
 | 模型 | 潜变量 | 核心变化 | 实现 |
 |---|---|---|---|
 | VAE | 连续高斯 | 最大化 ELBO | `GaussianVAE` |
@@ -43,6 +53,8 @@ python -m venv .venv
 # Windows: .venv\Scripts\activate
 # Linux/macOS: source .venv/bin/activate
 pip install -e ".[test]"
+python examples/probability_walkthrough.py
+python examples/vae_loss_walkthrough.py
 pytest -q
 python -m vae_lab.train --model vae --epochs 5
 python -m vae_lab.train --model beta-vae --beta 4 --epochs 5
@@ -55,10 +67,10 @@ python -m vae_lab.train --model vq-vae --epochs 5
 
 ## 如何阅读
 
-1. 先阅读基础推导，明确“证据”“后验”“变分分布”和 ELBO 的关系。
-2. 打开 `src/vae_lab/models.py`，按公式编号查找代码注释。
-3. 再阅读变体推导，比较每个模型究竟改了概率模型、推断方法还是目标函数。
-4. 最后运行测试和短训练，观察重构项、KL 项、码本损失如何变化。
+1. 如果对 $p(x)$、条件概率或期望下标不确定，先读“零概率基础”并运行两个演示。
+2. 再阅读基础推导，明确“证据”“后验”“变分分布”和 ELBO 的关系。
+3. 打开 `src/vae_lab/models.py`，按公式编号查找代码注释。
+4. 最后阅读变体推导并运行短训练，观察重构项、KL 项、码本损失如何变化。
 
 ## 重要约定
 

@@ -20,6 +20,7 @@ from matplotlib.mathtext import MathTextParser
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = [
+    (ROOT / "docs" / "00-probability-language-for-vae.md", "probability"),
     (ROOT / "docs" / "01-vae-derivation.md", "vae"),
     (ROOT / "docs" / "02-variants.md", "variants"),
 ]
@@ -147,10 +148,24 @@ def render_svg(rows: list[str], tag: str | None, output: Path) -> None:
 
 
 def main() -> None:
-    manifest: dict[str, dict[str, object]] = {}
+    manifest_path = ASSET_ROOT / "formulas.json"
+    if manifest_path.exists():
+        manifest: dict[str, dict[str, object]] = json.loads(
+            manifest_path.read_text(encoding="utf-8")
+        )
+    else:
+        manifest = {}
     total = 0
     for doc_path, group in DOCS:
         markdown = doc_path.read_text(encoding="utf-8")
+        if BLOCK_RE.search(markdown) is None:
+            continue
+
+        manifest = {
+            key: value
+            for key, value in manifest.items()
+            if not key.startswith(f"{group}/")
+        }
         counter = 0
 
         def replace(match: re.Match[str]) -> str:
@@ -174,12 +189,10 @@ def main() -> None:
             )
 
         converted, replacements = BLOCK_RE.subn(replace, markdown)
-        if replacements == 0:
-            raise RuntimeError(f"No display equations found in {doc_path}")
         doc_path.write_text(converted, encoding="utf-8", newline="\n")
 
     ASSET_ROOT.mkdir(parents=True, exist_ok=True)
-    (ASSET_ROOT / "formulas.json").write_text(
+    manifest_path.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
         newline="\n",
