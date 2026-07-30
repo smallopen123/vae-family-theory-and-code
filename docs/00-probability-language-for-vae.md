@@ -5,8 +5,8 @@
 > $q_\phi(z\mid x)$ 和 $\mathbb E_{q_\phi(z\mid x)}[\cdot]$，并能回答
 > “为什么训练要最大化 $p_\theta(x)$”。
 >
-> 本章的独立公式会被预渲染为 SVG，GitHub 网页打开即可查看，不需要复制、
-> 转换或安装公式插件。
+> 本章公式使用 GitHub 原生 LaTeX 数学块，网页打开即可查看；同时保留
+> 可复制、可修改的 LaTeX 源码，不需要转换或安装插件。
 
 ## 0. 先记住一张“符号身份证”
 
@@ -34,9 +34,10 @@
 
 若 $X$ 表示一次抛硬币的结果，用 $H$ 表示正面、$T$ 表示反面，那么
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-01.svg" alt="公式（P1）" />
-</p>
+```math
+p(X=H)=0.6,\qquad p(X=T)=0.4.
+\tag{P1}
+```
 
 通常为了简洁，把随机变量 $X$ 取到具体值 $x$ 的概率写成 $p(x)$。
 所以 $p(x)$ 的准确读法是：
@@ -48,9 +49,10 @@
 图像像素或高斯潜变量一般按连续量处理。连续变量在单个点的概率为零，
 但一个很小区间的概率近似等于“密度乘区间宽度”：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-02.svg" alt="公式（P2）" />
-</p>
+```math
+\Pr(x\le X\le x+\Delta x)\approx p(x)\,\Delta x.
+\tag{P2}
+```
 
 所以 VAE 中口头说“提高图片 $x$ 的概率”，更严谨地说是：
 
@@ -58,9 +60,10 @@
 
 密度可以大于 1；真正必须等于 1 的是整个空间下的积分：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-03.svg" alt="公式（P3）" />
-</p>
+```math
+\int p(x)\,dx=1.
+\tag{P3}
+```
 
 ---
 
@@ -87,15 +90,17 @@ $p(x=1\mid z=0)=0.2$ 的读法是：
 
 “天气恶劣并且航班延误”的联合概率为
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-04.svg" alt="公式（P4）" />
-</p>
+```math
+p(x=1,z=1)=p(z=1)\,p(x=1\mid z=1)=0.4\times0.9=0.36.
+\tag{P4}
+```
 
 一般地，联合分布的乘法规则是
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-05.svg" alt="公式（P5）" />
-</p>
+```math
+p(x,z)=p(z)\,p(x\mid z)=p(x)\,p(z\mid x).
+\tag{P5}
+```
 
 VAE 选择第一种分解作为生成故事：先生成原因 $z$，再由原因生成观测 $x$。
 
@@ -103,15 +108,24 @@ VAE 选择第一种分解作为生成故事：先生成原因 $z$，再由原因
 
 我们只看见“延误”，不知道天气状态。因此要把所有可能的天气状态都考虑进去：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-06.svg" alt="公式（P6）" />
-</p>
+```math
+\begin{aligned}
+p(x=1)
+&=\sum_z p(x=1,z)\\
+&=p(z=0)p(x=1\mid z=0)+p(z=1)p(x=1\mid z=1)\\
+&=0.6\times0.2+0.4\times0.9\\
+&=0.48.
+\end{aligned}
+\tag{P6}
+```
 
 这个“把隐藏原因全部加掉”的动作叫**边缘化**。若 $z$ 连续，就把求和换成积分：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-07.svg" alt="公式（P7）" />
-</p>
+```math
+p_\theta(x)=\int p_\theta(x,z)\,dz
+=\int p(z)\,p_\theta(x\mid z)\,dz.
+\tag{P7}
+```
 
 注意：这里不是“积分掉了无用信息”，而是说我们没有观测到 $z$，所以必须把每个
 可能的 $z$ 生成当前 $x$ 的贡献都累计起来。
@@ -120,9 +134,15 @@ VAE 选择第一种分解作为生成故事：先生成原因 $z$，再由原因
 
 现在已经看见航班延误，天气恶劣的概率是多少？根据 Bayes 公式：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-08.svg" alt="公式（P8）" />
-</p>
+```math
+\begin{aligned}
+p(z=1\mid x=1)
+&=\frac{p(x=1,z=1)}{p(x=1)}\\
+&=\frac{p(z=1)p(x=1\mid z=1)}{p(x=1)}\\
+&=\frac{0.4\times0.9}{0.48}=0.75.
+\end{aligned}
+\tag{P8}
+```
 
 先验 $p(z=1)=0.4$ 是“没看到延误前”的判断；后验 $p(z=1\mid x=1)=0.75$
 是“看到延误后”的更新判断。
@@ -141,9 +161,12 @@ VAE 中也是同一件事：
 
 设函数 $f(z)$ 在 $z=0$ 时取 10，在 $z=1$ 时取 30。按先验 $p(z)$ 加权：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-09.svg" alt="公式（P9）" />
-</p>
+```math
+\mathbb E_{p(z)}[f(z)]
+=\sum_z p(z)f(z)
+=0.6\times10+0.4\times30=18.
+\tag{P9}
+```
 
 下标 $p(z)$ 回答的不是“对谁求导”，而是两个问题：
 
@@ -152,17 +175,21 @@ VAE 中也是同一件事：
 
 若改用看见延误后的后验，权重发生变化：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-10.svg" alt="公式（P10）" />
-</p>
+```math
+\mathbb E_{p(z\mid x=1)}[f(z)]
+=0.25\times10+0.75\times30=25.
+\tag{P10}
+```
 
 因此，即使方括号中的 $f(z)$ 完全相同，期望下标不同，结果也会不同。
 
 ### 3.2 连续变量时，求和变成积分
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-11.svg" alt="公式（P11）" />
-</p>
+```math
+\mathbb E_{q_\phi(z\mid x)}[f(z)]
+=\int q_\phi(z\mid x)\,f(z)\,dz.
+\tag{P11}
+```
 
 逐字读作：
 
@@ -173,9 +200,12 @@ VAE 中也是同一件事：
 
 积分难以直接计算时，从该分布采样 $L$ 次：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-12.svg" alt="公式（P12）" />
-</p>
+```math
+\mathbb E_{q_\phi(z\mid x)}[f(z)]
+\approx \frac1L\sum_{\ell=1}^{L}f(z^{(\ell)}),
+\qquad z^{(\ell)}\sim q_\phi(z\mid x).
+\tag{P12}
+```
 
 这里：
 
@@ -192,15 +222,19 @@ VAE 中也是同一件事：
 
 先看最简单的 Bernoulli 模型。$\theta$ 表示正面概率。观测数据为
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-13.svg" alt="公式（P13）" />
-</p>
+```math
+\mathcal D=(1,1,1,0).
+\tag{P13}
+```
 
 假设四次观测条件独立，整组数据在参数 $\theta$ 下的似然为
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-14.svg" alt="公式（P14）" />
-</p>
+```math
+p_\theta(\mathcal D)
+=\prod_{i=1}^{4}p_\theta(x_i)
+=\theta^3(1-\theta).
+\tag{P14}
+```
 
 它不是“参数 $\theta$ 的概率”；$\theta$ 在最大似然中是我们可以调整的旋钮。
 似然回答：
@@ -218,23 +252,29 @@ VAE 中也是同一件事：
 $\theta=0.75$ 给已经观察到的“三正一反”最高的似然。最大化似然就是选择
 最能解释训练样本的模型参数：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-15.svg" alt="公式（P15）" />
-</p>
+```math
+\theta_{\mathrm{MLE}}
+=\arg\max_\theta p_\theta(\mathcal D).
+\tag{P15}
+```
 
 ### 4.2 为什么实际最大化对数似然
 
 对数函数严格单调递增，所以最大值位置不变：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-16.svg" alt="公式（P16）" />
-</p>
+```math
+\arg\max_\theta p_\theta(\mathcal D)
+=\arg\max_\theta\log p_\theta(\mathcal D).
+\tag{P16}
+```
 
 对数还能把许多很小概率的乘积变为求和：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-17.svg" alt="公式（P17）" />
-</p>
+```math
+\log p_\theta(\mathcal D)
+=\sum_{i=1}^{N}\log p_\theta(x_i).
+\tag{P17}
+```
 
 这样既便于小批量训练，又避免大量小数相乘造成数值下溢。
 
@@ -242,9 +282,11 @@ $\theta=0.75$ 给已经观察到的“三正一反”最高的似然。最大化
 
 每张训练图片只给出 $x_i$，没有给出对应 $z_i$。因此需要最大化
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-18.svg" alt="公式（P18）" />
-</p>
+```math
+\sum_{i=1}^{N}\log p_\theta(x_i)
+=\sum_{i=1}^{N}\log\int p(z_i)p_\theta(x_i\mid z_i)\,dz_i.
+\tag{P18}
+```
 
 直观上，它要求解码器和先验共同做到：
 
@@ -261,9 +303,12 @@ $\theta=0.75$ 给已经观察到的“三正一反”最高的似然。最大化
 
 VAE 的后验由 Bayes 公式给出：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-19.svg" alt="公式（P19）" />
-</p>
+```math
+p_\theta(z\mid x)
+=\frac{p(z)p_\theta(x\mid z)}
+{\int p(z')p_\theta(x\mid z')\,dz'}.
+\tag{P19}
+```
 
 分母需要遍历连续高维潜空间。解码器是非线性神经网络时，这个积分通常没有
 可用的解析解。注意，“后验难算”和“后验不存在”是两回事：它在数学上存在，
@@ -271,9 +316,12 @@ VAE 的后验由 Bayes 公式给出：
 
 于是用编码器输出一个容易采样、容易算密度的分布：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-20.svg" alt="公式（P20）" />
-</p>
+```math
+q_\phi(z\mid x)
+=\mathcal N\!\left(z;\mu_\phi(x),
+\operatorname{diag}(\sigma_\phi^2(x))\right).
+\tag{P20}
+```
 
 $q$ 的角色不是替换生成模型中的先验 $p(z)$，而是帮助我们在看见 $x$ 后，
 快速找到最可能解释它的潜变量区域。
@@ -284,15 +332,20 @@ $q$ 的角色不是替换生成模型中的先验 $p(z)$，而是帮助我们在
 
 有一个精确恒等式：
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-21.svg" alt="公式（P21）" />
-</p>
+```math
+\log p_\theta(x)
+=\mathcal L(\theta,\phi;x)
++D_{\mathrm{KL}}\!\left(
+q_\phi(z\mid x)\,\|\,p_\theta(z\mid x)\right).
+\tag{P21}
+```
 
 KL 散度永远非负，所以
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-22.svg" alt="公式（P22）" />
-</p>
+```math
+\log p_\theta(x)\ge \mathcal L(\theta,\phi;x).
+\tag{P22}
+```
 
 这就是“证据下界”：证据指 $p_\theta(x)$，下界指 $\mathcal L$ 不超过它。
 这个恒等式不是需要死记的结论；[基础 VAE 推导第 3、4 节](01-vae-derivation.md)
@@ -302,9 +355,13 @@ KL 散度永远非负，所以
 
 把联合分布 $p_\theta(x,z)=p(z)p_\theta(x\mid z)$ 代入，下界可写成
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-23.svg" alt="公式（P23）" />
-</p>
+```math
+\mathcal L(\theta,\phi;x)
+=\mathbb E_{q_\phi(z\mid x)}
+[\log p_\theta(x\mid z)]
+-D_{\mathrm{KL}}\!\left(q_\phi(z\mid x)\,\|\,p(z)\right).
+\tag{P23}
+```
 
 逐项解释：
 
@@ -316,9 +373,13 @@ KL 散度永远非负，所以
 
 因此 PyTorch 中常见的损失是
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-24.svg" alt="公式（P24）" />
-</p>
+```math
+\mathrm{loss}
+=-\mathcal L
+=\underbrace{-\mathbb E_q[\log p_\theta(x\mid z)]}_{\text{重构负对数似然}}
++\underbrace{D_{\mathrm{KL}}(q_\phi(z\mid x)\|p(z))}_{\text{KL 正则}}.
+\tag{P24}
+```
 
 若像素采用 Bernoulli 似然，第一项就是二元交叉熵 BCE。代码里的
 `BCE + KL` 并不是另造了一个目标，而是负 ELBO。
@@ -343,9 +404,11 @@ flowchart LR
 
 重参数化把“从依赖 $\phi$ 的分布采样”改写为
 
-<p align="center">
-  <img src="../assets/equations/probability/eq-25.svg" alt="公式（P25）" />
-</p>
+```math
+\epsilon\sim\mathcal N(0,I),\qquad
+z=\mu_\phi(x)+\sigma_\phi(x)\odot\epsilon.
+\tag{P25}
+```
 
 随机性被隔离在不含参数的 $\epsilon$ 中，$z$ 对 $\mu_\phi$ 和
 $\sigma_\phi$ 仍是可微的，因此重构项的梯度可以传回编码器。

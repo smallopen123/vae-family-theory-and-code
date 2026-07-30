@@ -12,27 +12,47 @@
 
 标准 VAE 目标为
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-01.svg" alt="公式（1）" />
-</p>
+```math
+\mathcal L_{\mathrm{VAE}}
+=\mathbb E_q[\log p_\theta(x\mid z)]
+-D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p(z)).
+\tag{1}
+```
 
 β‑VAE 修改为
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-02.svg" alt="公式（2）" />
-</p>
+```math
+\boxed{
+\mathcal L_{\beta}
+=\mathbb E_q[\log p_\theta(x\mid z)]
+-\beta D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p(z))
+}.
+\tag{2}
+```
 
 它可从约束优化得到。希望重构尽可能好，同时限制每个样本的平均编码容量：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-03.svg" alt="公式（3）" />
-</p>
+```math
+\max_{\theta,\phi}
+\mathbb E_q[\log p_\theta(x\mid z)]
+\quad
+\text{s.t.}\quad
+D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p(z))\le C.
+\tag{3}
+```
 
 构造 Lagrangian：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-04.svg" alt="公式（4）" />
-</p>
+```math
+\begin{aligned}
+\mathcal F
+&=\mathbb E_q[\log p_\theta(x\mid z)]
+-\beta(D_{\mathrm{KL}}-C)\\
+&=\mathbb E_q[\log p_\theta(x\mid z)]
+-\beta D_{\mathrm{KL}}+\beta C.
+\end{aligned}
+\tag{4}
+```
 
 $C$ 固定时 $\beta C$ 不影响参数最优点，于是得到式 (2)。
 
@@ -46,27 +66,47 @@ $C$ 固定时 $\beta C$ 不影响参数最优点，于是得到式 (2)。
 
 令 $c$ 为类别、天气、历史轨迹或其他条件。目标从 $p(x)$ 变为
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-05.svg" alt="公式（5）" />
-</p>
+```math
+p_\theta(x\mid c)=\int p_\theta(x,z\mid c)\,dz.
+\tag{5}
+```
 
 常用分解为
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-06.svg" alt="公式（6）" />
-</p>
+```math
+p_\theta(x,z\mid c)=p(z\mid c)p_\theta(x\mid z,c).
+\tag{6}
+```
 
 引入近似后验 $q_\phi(z\mid x,c)$。乘除它：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-07.svg" alt="公式（7）" />
-</p>
+```math
+\begin{aligned}
+\log p_\theta(x\mid c)
+&=\log\int q_\phi(z\mid x,c)
+\frac{p_\theta(x,z\mid c)}{q_\phi(z\mid x,c)}dz\\
+&\ge
+\mathbb E_{q_\phi(z\mid x,c)}
+\left[
+\log\frac{p_\theta(x,z\mid c)}{q_\phi(z\mid x,c)}
+\right]\\
+&=
+\mathbb E_q[\log p_\theta(x\mid z,c)]
+-D_{\mathrm{KL}}(q_\phi(z\mid x,c)\Vert p(z\mid c)).
+\end{aligned}
+\tag{7}
+```
 
 若取与条件无关的先验 $p(z\mid c)=p(z)=\mathcal N(0,I)$：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-08.svg" alt="公式（8）" />
-</p>
+```math
+\boxed{
+\mathcal L_{\mathrm{CVAE}}
+=\mathbb E_q[\log p_\theta(x\mid z,c)]
+-D_{\mathrm{KL}}(q_\phi(z\mid x,c)\Vert p(z))
+}.
+\tag{8}
+```
 
 ```mermaid
 flowchart LR
@@ -87,51 +127,79 @@ $z\sim p(z)$。若使用可学习条件先验 $p_\psi(z\mid c)$，则生成时�
 
 定义重要性权重
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-09.svg" alt="公式（9）" />
-</p>
+```math
+w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
+\tag{9}
+```
 
 因为
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-10.svg" alt="公式（10）" />
-</p>
+```math
+\mathbb E_{q_\phi(z\mid x)}[w(z)]
+=\int q(z\mid x)\frac{p_\theta(x,z)}{q(z\mid x)}dz
+=p_\theta(x),
+\tag{10}
+```
 
 取 $K$ 个独立样本 $z_1,\ldots,z_K\sim q_\phi(z\mid x)$，有
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-11.svg" alt="公式（11）" />
-</p>
+```math
+\hat p_K(x)=\frac1K\sum_{k=1}^{K}w(z_k),
+\qquad
+\mathbb E[\hat p_K(x)]=p_\theta(x).
+\tag{11}
+```
 
 对 $\log$ 使用 Jensen 不等式：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-12.svg" alt="公式（12）" />
-</p>
+```math
+\begin{aligned}
+\log p_\theta(x)
+&=\log\mathbb E_{z_{1:K}}[\hat p_K(x)]\\
+&\ge\mathbb E_{z_{1:K}}[\log\hat p_K(x)]\\
+&\equiv\mathcal L_K.
+\end{aligned}
+\tag{12}
+```
 
 因此
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-13.svg" alt="公式（13）" />
-</p>
+```math
+\boxed{
+\mathcal L_K
+=\mathbb E_{z_{1:K}\sim q}
+\left[
+\log\frac1K\sum_{k=1}^{K}
+\frac{p_\theta(x,z_k)}{q_\phi(z_k\mid x)}
+\right]
+}.
+\tag{13}
+```
 
 当 $K=1$：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-14.svg" alt="公式（14）" />
-</p>
+```math
+\mathcal L_1
+=\mathbb E_q[\log p_\theta(x,z)-\log q_\phi(z\mid x)]
+=\mathcal L_{\mathrm{VAE}}.
+\tag{14}
+```
 
 实现时令
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-15.svg" alt="公式（15）" />
-</p>
+```math
+\log w_k
+=\log p_\theta(x\mid z_k)+\log p(z_k)-\log q_\phi(z_k\mid x).
+\tag{15}
+```
 
 为避免指数溢出，使用
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-16.svg" alt="公式（16）" />
-</p>
+```math
+\log\left(\frac1K\sum_k e^{\log w_k}\right)
+=\operatorname{logsumexp}_k(\log w_k)-\log K.
+\tag{16}
+```
 
 在常见条件下 $\mathcal L_K$ 随 $K$ 增大而变紧，且极限趋近
 $\log p_\theta(x)$。但更大的 $K$ 增加显存和计算量，并可能降低推断网络梯度的信噪比。
@@ -154,43 +222,58 @@ flowchart LR
 
 VQ‑VAE 编码器先输出连续向量
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-17.svg" alt="公式（17）" />
-</p>
+```math
+z_e(x)=E_\phi(x)\in\mathbb R^D.
+\tag{17}
+```
 
 维护包含 $K$ 个向量的码本
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-18.svg" alt="公式（18）" />
-</p>
+```math
+\mathcal E=\{e_1,\ldots,e_K\},\qquad e_k\in\mathbb R^D.
+\tag{18}
+```
 
 通过最近邻选择离散索引：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-19.svg" alt="公式（19）" />
-</p>
+```math
+k^\*=\arg\min_{k\in\{1,\ldots,K\}}
+\|z_e(x)-e_k\|_2^2,
+\tag{19}
+```
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-20.svg" alt="公式（20）" />
-</p>
+```math
+z_q(x)=e_{k^\*}.
+\tag{20}
+```
 
 距离可高效展开：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-21.svg" alt="公式（21）" />
-</p>
+```math
+\|z-e_k\|_2^2
+=\|z\|_2^2+\|e_k\|_2^2-2z^\top e_k.
+\tag{21}
+```
 
 总损失为
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-22.svg" alt="公式（22）" />
-</p>
+```math
+\boxed{
+\mathcal J_{\mathrm{VQ}}
+=\underbrace{-\log p_\theta(x\mid z_q)}_{\text{重构}}
++\underbrace{\|\operatorname{sg}[z_e]-e\|_2^2}_{\text{码本损失}}
++\beta\underbrace{\|z_e-\operatorname{sg}[e]\|_2^2}_{\text{承诺损失}}
+}.
+\tag{22}
+```
 
 $\operatorname{sg}$ 是 stop-gradient：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-23.svg" alt="公式（23）" />
-</p>
+```math
+\operatorname{sg}[u]=u,\qquad
+\frac{\partial\operatorname{sg}[u]}{\partial u}=0.
+\tag{23}
+```
 
 逐项看梯度：
 
@@ -200,21 +283,26 @@ $\operatorname{sg}$ 是 stop-gradient：
 
 直通估计写成
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-24.svg" alt="公式（24）" />
-</p>
+```math
+z_{\mathrm{st}}
+=z_e+\operatorname{sg}[z_q-z_e].
+\tag{24}
+```
 
 前向数值：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-25.svg" alt="公式（25）" />
-</p>
+```math
+z_{\mathrm{st}}=z_e+(z_q-z_e)=z_q.
+\tag{25}
+```
 
 反向导数：
 
-<p align="center">
-  <img src="../assets/equations/variants/eq-26.svg" alt="公式（26）" />
-</p>
+```math
+\frac{\partial z_{\mathrm{st}}}{\partial z_e}
+=1+0=1.
+\tag{26}
+```
 
 因此解码器前向看到量化向量，而重构梯度像恒等映射一样传给编码器。
 
