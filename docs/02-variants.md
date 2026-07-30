@@ -54,17 +54,17 @@ D_{\mathrm{KL}}(q_\phi(z\mid x)\Vert p(z))\le C.
 \tag{4}
 ```
 
-$C$ 固定时 $\beta C$ 不影响参数最优点，于是得到式 (2)。
+$`C`$ 固定时 $`\beta C`$ 不影响参数最优点，于是得到式 (2)。
 
-- $\beta=1$：标准 VAE；
-- $\beta>1$：更强压缩，常促进因子化表示，但可能牺牲重构；
-- $0<\beta<1$：更重视重构，但潜空间可能偏离先验。
+- $`\beta=1`$：标准 VAE；
+- $`\beta>1`$：更强压缩，常促进因子化表示，但可能牺牲重构；
+- $`0<\beta<1`$：更重视重构，但潜空间可能偏离先验。
 
 注意：无监督解耦一般不具可识别性保证；β 增大并不自动保证语义解耦。
 
 ## 2. CVAE：在给定条件下建模
 
-令 $c$ 为类别、天气、历史轨迹或其他条件。目标从 $p(x)$ 变为
+令 $`c`$ 为类别、天气、历史轨迹或其他条件。目标从 $`p(x)`$ 变为
 
 ```math
 p_\theta(x\mid c)=\int p_\theta(x,z\mid c)\,dz.
@@ -78,7 +78,7 @@ p_\theta(x,z\mid c)=p(z\mid c)p_\theta(x\mid z,c).
 \tag{6}
 ```
 
-引入近似后验 $q_\phi(z\mid x,c)$。乘除它：
+引入近似后验 $`q_\phi(z\mid x,c)`$。乘除它：
 
 ```math
 \begin{aligned}
@@ -97,7 +97,7 @@ p_\theta(x,z\mid c)=p(z\mid c)p_\theta(x\mid z,c).
 \tag{7}
 ```
 
-若取与条件无关的先验 $p(z\mid c)=p(z)=\mathcal N(0,I)$：
+若取与条件无关的先验 $`p(z\mid c)=p(z)=\mathcal N(0,I)`$：
 
 ```math
 \boxed{
@@ -120,8 +120,8 @@ flowchart LR
     D --> XH["x̂"]
 ```
 
-训练时编码器看 $x,c$，生成时只给定 $c$，再采样
-$z\sim p(z)$。若使用可学习条件先验 $p_\psi(z\mid c)$，则生成时应从该先验采样，KL 也必须改成两个条件高斯之间的 KL。
+训练时编码器看 $`x,c`$，生成时只给定 $`c`$，再采样
+$`z\sim p(z)`$。若使用可学习条件先验 $`p_\psi(z\mid c)`$，则生成时应从该先验采样，KL 也必须改成两个条件高斯之间的 KL。
 
 ## 3. IWAE：用多个重要性样本收紧下界
 
@@ -141,7 +141,7 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 \tag{10}
 ```
 
-取 $K$ 个独立样本 $z_1,\ldots,z_K\sim q_\phi(z\mid x)$，有
+取 $`K`$ 个独立样本 $`z_1,\ldots,z_K\sim q_\phi(z\mid x)`$，有
 
 ```math
 \hat p_K(x)=\frac1K\sum_{k=1}^{K}w(z_k),
@@ -150,7 +150,7 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 \tag{11}
 ```
 
-对 $\log$ 使用 Jensen 不等式：
+对 $`\log`$ 使用 Jensen 不等式：
 
 ```math
 \begin{aligned}
@@ -176,7 +176,7 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 \tag{13}
 ```
 
-当 $K=1$：
+当 $`K=1`$：
 
 ```math
 \mathcal L_1
@@ -201,8 +201,8 @@ w(z)=\frac{p_\theta(x,z)}{q_\phi(z\mid x)}.
 \tag{16}
 ```
 
-在常见条件下 $\mathcal L_K$ 随 $K$ 增大而变紧，且极限趋近
-$\log p_\theta(x)$。但更大的 $K$ 增加显存和计算量，并可能降低推断网络梯度的信噪比。
+在常见条件下 $`\mathcal L_K`$ 随 $`K`$ 增大而变紧，且极限趋近
+$`\log p_\theta(x)`$。但更大的 $`K`$ 增加显存和计算量，并可能降低推断网络梯度的信噪比。
 
 ```mermaid
 flowchart LR
@@ -227,7 +227,7 @@ z_e(x)=E_\phi(x)\in\mathbb R^D.
 \tag{17}
 ```
 
-维护包含 $K$ 个向量的码本
+维护包含 $`K`$ 个向量的码本
 
 ```math
 \mathcal E=\{e_1,\ldots,e_K\},\qquad e_k\in\mathbb R^D.
@@ -267,7 +267,7 @@ z_q(x)=e_{k^\*}.
 \tag{22}
 ```
 
-$\operatorname{sg}$ 是 stop-gradient：
+$`\operatorname{sg}`$ 是 stop-gradient：
 
 ```math
 \operatorname{sg}[u]=u,\qquad
@@ -319,14 +319,14 @@ flowchart LR
     D --> XH["x̂"]
 ```
 
-若离散先验取均匀分布且编码器索引是确定性的，原始 VQ‑VAE 中对应 KL 项为常数 $\log K$，训练时可省略。要从零生成新样本，仍需训练 $p(k)$ 或 $p(k_{1:T})$；仅从均匀码本随机采样通常不能得到有结构的样本。
+若离散先验取均匀分布且编码器索引是确定性的，原始 VQ‑VAE 中对应 KL 项为常数 $`\log K`$，训练时可省略。要从零生成新样本，仍需训练 $`p(k)`$ 或 $`p(k_{1:T})`$；仅从均匀码本随机采样通常不能得到有结构的样本。
 
 ## 5. 横向比较
 
 | 问题 | VAE | β‑VAE | CVAE | IWAE | VQ‑VAE |
 |---|---|---|---|---|---|
 | 潜空间 | 连续 | 连续 | 连续 | 连续 | 离散 |
-| 推断样本数 | 1 | 1 | 1 | $K$ | 最近邻 |
+| 推断样本数 | 1 | 1 | 1 | $`K`$ | 最近邻 |
 | 目标变化 | ELBO | 加权 KL | 条件 ELBO | 更紧下界 | 重构+码本+承诺 |
 | 可控生成 | 无 | 无 | 有条件 | 无 | 需离散先验 |
 | 主要风险 | 后验坍塌 | 重构变差 | 条件被忽略 | 计算开销 | 码本坍塌 |

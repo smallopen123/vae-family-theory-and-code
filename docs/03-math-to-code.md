@@ -4,18 +4,18 @@
 
 | 数学对象 | 代码对象 | 实现要点 |
 |---|---|---|
-| $\mu_\phi(x),\log\sigma_\phi^2(x)$ | `GaussianVAE.encode` | 一个隐藏表示分成两个线性头 |
-| $z=\mu+\sigma\odot\epsilon$ | `reparameterize` | `exp(0.5 * logvar)` |
-| $D_{KL}(q\Vert p)$ | `kl_standard_normal` | 对潜变量维求和，对 batch 保留 |
-| $-\log p_\theta(x\mid z)$ | `bernoulli_nll` | 对 logits 使用稳定 BCE |
-| $-\mathcal L_\beta$ | `vae_loss` | `reconstruction + beta * kl` |
-| $q(z\mid x,c)$ | `ConditionalVAE.encode` | 拼接 one-hot 条件 |
-| $p(x\mid z,c)$ | `ConditionalVAE.decode` | 解码时再次拼接条件 |
-| $\log p(x,z)-\log q(z\mid x)$ | `iwae_loss` | 显式计算三个 log density |
-| $\log\sum\exp-\log K$ | `iwae_loss` | `torch.logsumexp` |
-| $\arg\min_k\|z_e-e_k\|^2$ | `VectorQuantizer.forward` | 展开平方距离并 `argmin` |
-| $\operatorname{sg}$ | `.detach()` | 前向保值、反向截断 |
-| $z_e+\operatorname{sg}[z_q-z_e]$ | `quantized_st` | 直通估计 |
+| $`\mu_\phi(x),\log\sigma_\phi^2(x)`$ | `GaussianVAE.encode` | 一个隐藏表示分成两个线性头 |
+| $`z=\mu+\sigma\odot\epsilon`$ | `reparameterize` | `exp(0.5 * logvar)` |
+| $`D_{KL}(q\Vert p)`$ | `kl_standard_normal` | 对潜变量维求和，对 batch 保留 |
+| $`-\log p_\theta(x\mid z)`$ | `bernoulli_nll` | 对 logits 使用稳定 BCE |
+| $`-\mathcal L_\beta`$ | `vae_loss` | `reconstruction + beta * kl` |
+| $`q(z\mid x,c)`$ | `ConditionalVAE.encode` | 拼接 one-hot 条件 |
+| $`p(x\mid z,c)`$ | `ConditionalVAE.decode` | 解码时再次拼接条件 |
+| $`\log p(x,z)-\log q(z\mid x)`$ | `iwae_loss` | 显式计算三个 log density |
+| $`\log\sum\exp-\log K`$ | `iwae_loss` | `torch.logsumexp` |
+| $`\arg\min_k\|z_e-e_k\|^2`$ | `VectorQuantizer.forward` | 展开平方距离并 `argmin` |
+| $`\operatorname{sg}`$ | `.detach()` | 前向保值、反向截断 |
+| $`z_e+\operatorname{sg}[z_q-z_e]`$ | `quantized_st` | 直通估计 |
 
 ## 张量形状
 

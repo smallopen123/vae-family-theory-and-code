@@ -30,7 +30,7 @@
 
 - 先确认实现用的是 Bernoulli、Gaussian 还是其他似然；
 - 比较 loss 的 `sum` / `mean` 约定后再比较数值；
-- 检查 `logvar` 是否真的是 $\log\sigma^2$；
+- 检查 `logvar` 是否真的是 $`\log\sigma^2`$；
 - VQ‑VAE 需确认码本使用梯度、EMA 还是两者之一更新；
 - 代码能运行不等于公式假设一致，实验比较前应统一数据预处理和似然。
 
